@@ -1,0 +1,123 @@
+.registration-container {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #d9e0e8;
+    text-align: center; 
+    color: rgb(0, 0, 0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+select{
+    width: 80%;
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+textarea {
+    width: 80%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    text-align: left;
+    margin: 0 auto;
+    resize: vertical;
+    min-height: 100px; 
+}
+
+::placeholder{
+    text-align: left;
+}
+.wide-align {
+    width: 80%;
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    text-align: left;
+    margin: 0 auto;
+}
+::placeholder{
+    padding: 10px;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 0 auto; 
+}
+
+#repeat-password {
+    margin-bottom: 20px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 80%;
+    margin: 0 auto; 
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.merchant-fields {
+    display: none;
+    margin-top: 10px;
+}
+
+input[type="radio"][value="merchant"]:checked + .merchant-fields {
+    display: block;
+}
+
+#merchantName,
+#companyDescription {
+    width: 80%;
+    display: inline-block;
+    vertical-align: top;
+
+}
+
+.labelAndButton-inline {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.login-link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: #007bff;
+    text-decoration: underline; 
+    cursor: pointer;
+}

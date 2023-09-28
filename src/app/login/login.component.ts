@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,8 @@ export class LoginComponent {
   password: string = '';
   rememberMe: boolean = false;
   submitted: boolean = false; 
+
+  constructor(private router: Router) {} // Inject the Router service
 
   onSubmit() {
     this.submitted = true;
@@ -24,9 +27,9 @@ export class LoginComponent {
     console.log('Password:', this.password);
     console.log('Remember Me:', this.rememberMe);
   }
-
+  
   onRegister() {
     // Implement your registration logic here
-    console.log('Registration logic goes here.');
+    this.router.navigate(['/registration']);
   }
 }

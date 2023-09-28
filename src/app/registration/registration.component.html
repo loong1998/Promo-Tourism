@@ -1,0 +1,70 @@
+<div class="registration-container">
+    <h1>Registration Form</h1>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="userType" class="wide-align">Register as:</label>
+            <select id="userType" formControlName="userType">
+                <option value="user">User</option>
+                <option value="merchant">Merchant User</option>
+            </select>
+        </div>       
+        <div class="form-group">
+            <label for="username" class="wide-align">Username</label>
+            <input type="text" id="username" formControlName="username" placeholder="Fill in username" required>
+            <div *ngIf="hasError('username', 'required')" class="error-message">Username is required</div>
+        </div>
+        <div *ngIf="registrationForm?.get('userType')?.value === 'merchant'">
+            <div class="form-group">
+                <label for="merchantName" class="wide-align">Merchant Name</label>
+                <input type="text" id="merchantName" formControlName="merchantName" placeholder="Fill in merchant name" required>
+                <div *ngIf="hasError('merchantName', 'required')" class="error-message">Merchant Name is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contactNumber" class="wide-align">Contact Number</label>
+            <input type="text" id="contactNumber" formControlName="contactNumber" placeholder="+6012345678" required>
+            <div *ngIf="hasError('contactNumber', 'required')" class="error-message">Contact Number is required</div>
+            <div *ngIf="hasError('contactNumber', 'invalidPhoneNumber')" class="error-message">Invalid phone number format(e.g., +60123456789)</div>
+        </div>
+        <div class="form-group">
+            <label for="email" class="wide-align">Email</label>
+            <input type="email" id="email" formControlName="email" placeholder="Fill in email" required>
+            <div *ngIf="hasError('email', 'required')" class="error-message">Email is required</div>
+            <div *ngIf="hasError('email', 'email')" class="error-message">Invalid email format</div>
+        </div>
+        <div *ngIf="registrationForm?.get('userType')?.value === 'merchant'">
+            <div class="form-group">
+                <label for="companyDescription" class="wide-align">Company Description</label>
+                <textarea id="companyDescription" formControlName="companyDescription" placeholder="Fill in company description" required></textarea>
+                <div *ngIf="hasError('companyDescription', 'required')" class="error-message">Company Description is required</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="wide-align">Password</label>
+            <input type="password" id="password" name="password" placeholder="Fill in password" formControlName="password">
+            <div *ngIf="hasError('password', 'required')" class="error-message">Password is required.</div>
+            <div *ngIf="hasError('password', 'invalidPassword')" class="error-message">
+                Password must contain at least 1 uppercase letter, <br>1 lowercase letter, 1 digit, and 1 special character.
+            </div>
+        </div>                
+        <div class="form-group">
+            <label for="repeatPassword" class="wide-align">Repeat Password</label>
+            <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Fill in repeat password" formControlName="repeatPassword">
+            <div *ngIf="registrationForm.hasError('passwordsNotMatch') && registrationForm.get('repeatPassword')?.touched">
+                <div class="error-message">Passwords do not match.</div>
+            </div>                       
+        </div><br>
+          
+
+        <div class="form-group">
+            <button type="submit">Register</button>
+        </div><br>
+        <div class="labelAndButton-inline">
+            <label>Already have an account?</label>
+        </div>
+        <div class="labelAndButton-inline">
+            <button class="login-link" (click)="onLogin()">Login</button>
+        </div>
+        
+    </form>
+</div>
