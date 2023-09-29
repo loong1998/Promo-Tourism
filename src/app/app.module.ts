@@ -14,6 +14,12 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { FileUploadDialogComponent } from './registration/file-upload-dialog/file-upload-dialog.component';
+
+
+
 
 const appRoutes: Routes = [
   {path: "product", component: ProductComponent},
@@ -29,7 +35,9 @@ const appRoutes: Routes = [
     CarouselComponent,
     ProductComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    RegistrationSuccessDialogComponent,
+    FileUploadDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +47,7 @@ const appRoutes: Routes = [
     MatToolbarModule,
     MatButtonModule,
     CommonModule,
+    MatDialogModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

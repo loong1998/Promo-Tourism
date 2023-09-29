@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MatDialog} from '@angular/material/dialog';
+import { RegistrationSuccessDialogComponent } from './registration-success-dialog/registration-success-dialog.component';
+import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
+
 
 @Component({
   selector: 'app-registration',
@@ -10,7 +14,7 @@ import { Router } from '@angular/router';
 export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {}
+  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group({
@@ -73,14 +77,26 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm.get(controlName)?.markAsTouched();
       }
     }
-
+  
     // Check if the form is valid
     if (this.registrationForm.valid) {
       // Implement registration logic here
       const formData = this.registrationForm.value;
       console.log('Form Data:', formData);
+      if (this.registrationForm.get!('userType')?.value === 'merchant') {
+        // Show the file upload dialog
+        this.dialog.open(FileUploadDialogComponent, {
+          disableClose: true
+        });
+      } else {
+        // Show the registration success dialog
+        this.dialog.open(RegistrationSuccessDialogComponent, {
+          disableClose: true
+        });
+      }
+
     }
-  }
+  }  
 
   onLogin() {
     this.router.navigate(['/login']);
