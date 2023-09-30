@@ -1,3 +1,32 @@
-<p>hello
+<div class="text-center mb-3 pb-3">
+    <h6 class="text-primary text-uppercase" style="letter-spacing: 5px;">Packages</h6>
+    <h1>Pefect Tour Packages</h1>
+</div>
+
+<div class="content">
+    <div fxLayout="row wrap" fxLayoutGap="16px grid">
+        <div fxFlex="33%" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let product of products">
+            <mat-card class="cardWidth">
+                <img class="img-fluid" [src]="product.imageUrl">
+                <mat-card-content class="padding-top">
+                    <a routerLink="/productDetails/{{product.productID}}" class="h5 text-decoration-none" href="">
+                        {{product.tourTitle}}
+                    </a>
+
+                    <div class="border-top mt-4 pt-4">
+                        <div class="d-flex justify-content-between">
+                            <h4 class="m-0">
+                                <mat-icon class="orange-icon">
+                                    thumb_up
+                                </mat-icon>
+                                <span class="aligned-with-icon">{{product.rating}}</span>
+                                
+                            </h4>  
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
     
-</p>
+</div>

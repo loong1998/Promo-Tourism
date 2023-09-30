@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { ProductComponent } from './product/product.component';
 import { LoginComponent } from './login/login.component';
+import { ProductDetailsComponent } from './product/productDetails/product-details.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -17,6 +18,9 @@ import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FileUploadDialogComponent } from './registration/file-upload-dialog/file-upload-dialog.component';
+import {MatCardModule} from '@angular/material/card';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {MatIconModule} from '@angular/material/icon';
 
 
 
@@ -25,7 +29,9 @@ const appRoutes: Routes = [
   {path: "product", component: ProductComponent},
   {path: "home", component: CarouselComponent},
   {path: "login", component: LoginComponent },
-  {path: "registration", component: RegistrationComponent}
+  {path: "registration", component: RegistrationComponent},
+  {path: "", component: CarouselComponent},
+  {path: 'productDetails/:productID', component: ProductDetailsComponent}
 ];
 
 @NgModule({
@@ -38,6 +44,8 @@ const appRoutes: Routes = [
     RegistrationComponent,
     RegistrationSuccessDialogComponent,
     FileUploadDialogComponent,
+    ProductDetailsComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -48,6 +56,9 @@ const appRoutes: Routes = [
     MatButtonModule,
     CommonModule,
     MatDialogModule,
+    MatCardModule,
+    FlexLayoutModule,
+    MatIconModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],

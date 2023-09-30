@@ -1,4 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { Product } from "../services/products.model";
+import { ProductService } from "../services/products.service";
 
 @Component(
     {
@@ -9,5 +11,13 @@ import { Component } from "@angular/core";
 )
 
 export class ProductComponent{
-    
+    products: Product[] = [];
+
+    constructor(public productsService: ProductService){
+        
+    }
+
+    ngOnInit(): void {
+        this.products = this.productsService.getProducts();
+    }
 }
