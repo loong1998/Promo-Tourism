@@ -27,26 +27,36 @@
                         <li class="li-style" *ngFor="let desc of productDescs">{{desc}}</li>
                     </ul>
 
-                    
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>First Class Flights</p>
+                        <mat-form-field class="mb-0">
+                            <mat-label>Number of Pax</mat-label>
+                            <input matInput required ngModel #numOfPax="ngModel"
+                                type="number" name="paxInput" id="paxInput"
+                                min="1" max="10">
+                            <mat-error *ngIf="numOfPax.invalid">Please enter a numeric number between 1 - 9!</mat-error>
+                            
+                        </mat-form-field>
                     </div>
+
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Handpicked Hotels</p>
+                        <mat-form-field class="mb-0">
+                            <mat-label>Contact Number</mat-label>
+                            <input matInput required ngModel #contactNum="ngModel"
+                                type="tel" pattern="[0-9]{3}[0-9]{7}">
+                                <mat-error *ngIf="contactNum.invalid">Please enter a valid phone number!</mat-error>
+                        </mat-form-field>
                     </div>
+
                     <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>5 Star Accommodations</p>
+                        <mat-form-field class="mb-0">
+                            <mat-label>Please select a visit date</mat-label>
+                            <input matInput [matDatepicker]="picker" required ngModel>
+                            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
                     </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Latest Model Vehicles</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>150 Premium City Tours</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Service</p>
-                    </div>
-                </div>
+                </div>    
+                
                 
                 <button mat-raised-button color = primary>Confirm</button>
             </div>

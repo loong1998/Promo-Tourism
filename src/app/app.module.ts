@@ -21,7 +21,9 @@ import { FileUploadDialogComponent } from './registration/file-upload-dialog/fil
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 
@@ -59,6 +61,9 @@ const appRoutes: Routes = [
     MatCardModule,
     FlexLayoutModule,
     MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [],
