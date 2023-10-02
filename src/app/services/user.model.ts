@@ -5,6 +5,6 @@ export interface User {
     email: string;
     companyDescription: string;
     password: string;
-    pdfFile: File;
+    pdfFile: string;
     status: string;
   }

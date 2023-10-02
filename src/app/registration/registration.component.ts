@@ -35,7 +35,7 @@ export class RegistrationComponent implements OnInit {
       companyDescription: [''],
       password: ['', [Validators.required, this.validatePassword]],
       repeatPassword: ['', Validators.required],
-      pdfFile: [null], // Add a form control for the PDF file
+      pdfFile: ['',Validators.required], // Add a form control for the PDF file
     }, {
       validator: [this.passwordMatchValidator, this.repeatPasswordValidator],
     });
@@ -128,7 +128,7 @@ export class RegistrationComponent implements OnInit {
           email: formData.email,
           companyDescription: formData.companyDescription,
           password: formData.password,
-          pdfFile: this.selectedPdfFile,
+          pdfFile: formData.pdfFile,
           status: 'pending',
         };
         this.userService.addAccount(newUser);

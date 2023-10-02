@@ -18,4 +18,10 @@ export class AccountListComponent implements OnInit {
       this.accounts = accounts;
     });
   }
+
+  getFileNameFromPath(path: string): string {
+    // Extract the file name from the path
+    const parts = path.split('/');
+    return parts[parts.length - 1];
+  }
 }

@@ -1,13 +1,10 @@
-<div *ngFor="let account of accounts">
-    <div class="account-item">
-      <h2>{{ account.username }}</h2>
-      <p><strong>Merchant Name:</strong> {{ account.merchantName }}</p>
-      <p><strong>Contact Number:</strong> {{ account.contactNumber }}</p>
-      <p><strong>Email:</strong> {{ account.email }}</p>
-      <p><strong>Company Description:</strong> {{ account.companyDescription }}</p>
-      <!-- You can add more details as needed -->
-  
-      <p><strong>Status:</strong> {{ account.status }}</p>
-    </div>
-  </div>
-  
+<div *ngFor="let user of accounts">
+  <h2>Username: {{ user.username }}</h2>
+  <p>Merchant Name: {{ user.merchantName }}</p>
+  <p>Contact Number: {{ user.contactNumber }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>Company Description: {{ user.companyDescription }}</p>
+  <p>Password: {{ user.password }}</p>
+  <p>Status: {{ user.status }}</p>
+  <iframe [src]="user.pdfFile" width="300px" height="300px">"assets/sample.pdf"</iframe>
+</div>
