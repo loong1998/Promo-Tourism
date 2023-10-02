@@ -25,6 +25,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
+import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 
 
 
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
   {path: "home", component: CarouselComponent},
   {path: "login", component: LoginComponent },
   {path: "registration", component: RegistrationComponent},
+  {path: "review-merchant-registration", component: ReviewMerchantRegistrationComponent},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent}
 ];
@@ -47,7 +50,9 @@ const appRoutes: Routes = [
     RegistrationComponent,
     RegistrationSuccessDialogComponent,
     FileUploadDialogComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ReviewMerchantRegistrationComponent,
+    ReviewMerchantDetailsComponent
     
   ],
   imports: [
