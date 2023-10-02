@@ -17,7 +17,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { FileUploadDialogComponent } from './registration/file-upload-dialog/file-upload-dialog.component';
+import { MerchantSuccessDialogComponent } from './registration/merchant-success-dialog/merchant-success-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
 import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
+import { AccountListComponent } from './account-list/account-list.component';
 
 
 
@@ -36,6 +37,7 @@ const appRoutes: Routes = [
   {path: "login", component: LoginComponent },
   {path: "registration", component: RegistrationComponent},
   {path: "review-merchant-registration", component: ReviewMerchantRegistrationComponent},
+  {path: "account-list", component:AccountListComponent},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent}
 ];
@@ -49,10 +51,11 @@ const appRoutes: Routes = [
     LoginComponent,
     RegistrationComponent,
     RegistrationSuccessDialogComponent,
-    FileUploadDialogComponent,
+    MerchantSuccessDialogComponent,
     ProductDetailsComponent,
     ReviewMerchantRegistrationComponent,
-    ReviewMerchantDetailsComponent
+    ReviewMerchantDetailsComponent,
+    AccountListComponent
     
   ],
   imports: [

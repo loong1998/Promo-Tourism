@@ -1,0 +1,13 @@
+<div *ngFor="let account of accounts">
+    <div class="account-item">
+      <h2>{{ account.username }}</h2>
+      <p><strong>Merchant Name:</strong> {{ account.merchantName }}</p>
+      <p><strong>Contact Number:</strong> {{ account.contactNumber }}</p>
+      <p><strong>Email:</strong> {{ account.email }}</p>
+      <p><strong>Company Description:</strong> {{ account.companyDescription }}</p>
+      <!-- You can add more details as needed -->
+  
+      <p><strong>Status:</strong> {{ account.status }}</p>
+    </div>
+  </div>
+  

@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatDialog} from '@angular/material/dialog';
 import { RegistrationSuccessDialogComponent } from './registration-success-dialog/registration-success-dialog.component';
-import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dialog.component';
+import { MerchantSuccessDialogComponent } from './merchant-success-dialog/merchant-success-dialog.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserService} from '../services/user.service';
+import { User } from '../services/user.model';
 
 
 @Component({
@@ -13,8 +16,14 @@ import { FileUploadDialogComponent } from './file-upload-dialog/file-upload-dial
 })
 export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
+  selectedPdfFile: File | undefined;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private dialog: MatDialog) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private dialog: MatDialog,
+    private userService: UserService // Inject the UserService
+  ) {}
 
   ngOnInit(): void {
     this.registrationForm = this.formBuilder.group({
@@ -26,10 +35,30 @@ export class RegistrationComponent implements OnInit {
       companyDescription: [''],
       password: ['', [Validators.required, this.validatePassword]],
       repeatPassword: ['', Validators.required],
+      pdfFile: [null], // Add a form control for the PDF file
     }, {
       validator: [this.passwordMatchValidator, this.repeatPasswordValidator],
     });
+  
+    // Set the PDF file input validator
+    // this.registrationForm.get('pdfFile')?.setValidators([Validators.required]);
+  }  
+
+  // Method to handle PDF file input change
+  onPdfFileChange(event: any) {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files.length > 0) {
+      // Set the selected PDF file
+      this.selectedPdfFile = fileInput.files[0];
+
+      // Clear the validation error for the PDF file input
+      this.registrationForm.get('pdfFile')?.setErrors(null);
+    } else {
+      // Clear the selected PDF file
+      this.selectedPdfFile = undefined;
+    }
   }
+
 
   // Custom validator function to check if passwords match
   private passwordMatchValidator(group: FormGroup): { passwordsNotMatch: boolean } | null {
@@ -80,21 +109,39 @@ export class RegistrationComponent implements OnInit {
   
     // Check if the form is valid
     if (this.registrationForm.valid) {
-      // Implement registration logic here
       const formData = this.registrationForm.value;
       console.log('Form Data:', formData);
-      if (this.registrationForm.get!('userType')?.value === 'merchant') {
+      if (this.registrationForm.get('userType')?.value === 'merchant') {
+        // Check if a PDF file is selected
+        if (!this.selectedPdfFile) {
+          // Show an error message for the PDF file input
+          this.registrationForm.get('pdfFile')?.setErrors({ required: true });
+          return; // Stop registration process if PDF is not selected
+        }
+    
+        // PDF file is selected, you can proceed with registration
+        // Implement registration logic here
+        const newUser: User = {
+          username: formData.username,
+          merchantName: formData.merchantName,
+          contactNumber: formData.contactNumber,
+          email: formData.email,
+          companyDescription: formData.companyDescription,
+          password: formData.password,
+          pdfFile: this.selectedPdfFile,
+          status: 'pending',
+        };
+        this.userService.addAccount(newUser);
+    
         // Show the file upload dialog
-        this.dialog.open(FileUploadDialogComponent, {
-          disableClose: true
+        this.dialog.open(MerchantSuccessDialogComponent, {
+          disableClose: true,
         });
-      } else {
-        // Show the registration success dialog
+      } else{
         this.dialog.open(RegistrationSuccessDialogComponent, {
           disableClose: true
         });
       }
-
     }
   }  
 

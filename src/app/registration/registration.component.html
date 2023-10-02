@@ -20,6 +20,7 @@
                 <div *ngIf="hasError('merchantName', 'required')" class="error-message">Merchant Name is required</div>
             </div>
         </div>
+        
         <div class="form-group">
             <label for="contactNumber" class="wide-align">Contact Number</label>
             <input type="text" id="contactNumber" formControlName="contactNumber" placeholder="+6012345678" required>
@@ -53,6 +54,12 @@
             <div *ngIf="registrationForm.hasError('passwordsNotMatch') && registrationForm.get('repeatPassword')?.touched">
                 <div class="error-message">Passwords do not match.</div>
             </div>                       
+        </div>
+        
+        <div *ngIf="registrationForm.get('userType').value === 'merchant'" class="form-group">        
+            <label for="pdfFile" class="wide-align">Upload PDF File (e.g. approved licenses, testimonials)</label>
+            <input type="file" id="pdfFile" (change)="onPdfFileChange($event)" accept=".pdf" required>
+            <div *ngIf="hasError('pdfFile', 'required')" class="error-message">PDF File is required for Merchants</div>
         </div><br>
           
 
