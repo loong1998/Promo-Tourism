@@ -17,6 +17,7 @@ import { User } from '../services/user.model';
 export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
   selectedPdfFile: File | undefined;
+  nextMerchantID: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,6 +27,7 @@ export class RegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.nextMerchantID = '001';
     this.registrationForm = this.formBuilder.group({
       username: ['', Validators.required],
       contactNumber: ['', [Validators.required, this.validateMalaysiaPhoneNumber]],
@@ -35,13 +37,34 @@ export class RegistrationComponent implements OnInit {
       companyDescription: [''],
       password: ['', [Validators.required, this.validatePassword]],
       repeatPassword: ['', Validators.required],
-      pdfFile: ['',Validators.required], // Add a form control for the PDF file
+      pdfFile: [''],
     }, {
       validator: [this.passwordMatchValidator, this.repeatPasswordValidator],
     });
-  
-    // Set the PDF file input validator
-    // this.registrationForm.get('pdfFile')?.setValidators([Validators.required]);
+
+    // Subscribe to changes in userType and update field validators accordingly
+    this.registrationForm.get('userType')?.valueChanges.subscribe(userType => {
+      const merchantNameControl = this.registrationForm.get('merchantName');
+      const companyDescriptionControl = this.registrationForm.get('companyDescription');
+      const pdfFileControl = this.registrationForm.get('pdfFile');
+
+      if (userType === 'user') {
+        // Clear validators for optional fields
+        merchantNameControl.clearValidators();
+        companyDescriptionControl.clearValidators();
+        pdfFileControl.clearValidators();
+      } else {
+        // Set validators back to required for merchant
+        merchantNameControl.setValidators(Validators.required);
+        companyDescriptionControl.setValidators(Validators.required);
+        pdfFileControl.setValidators(Validators.required);
+      }
+
+      // Update the validity of the controls
+      merchantNameControl.updateValueAndValidity();
+      companyDescriptionControl.updateValueAndValidity();
+      pdfFileControl.updateValueAndValidity();
+    });
   }  
 
   // Method to handle PDF file input change
@@ -130,14 +153,20 @@ export class RegistrationComponent implements OnInit {
           password: formData.password,
           pdfFile: formData.pdfFile,
           status: 'pending',
+          expanded: false,
+          merchantID: this.nextMerchantID,
         };
+        const nextIDNumber = parseInt(this.nextMerchantID) + 1;
+        this.nextMerchantID = nextIDNumber.toString().padStart(3, '0');
         this.userService.addAccount(newUser);
     
         // Show the file upload dialog
         this.dialog.open(MerchantSuccessDialogComponent, {
           disableClose: true,
         });
-      } else{
+      }
+      else{
+        console.log('Form Data:', formData);
         this.dialog.open(RegistrationSuccessDialogComponent, {
           disableClose: true
         });

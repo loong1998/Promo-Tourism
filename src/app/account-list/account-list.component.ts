@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service'; // Import the UserService
 import { User } from '../services/user.model'; // Import the User model
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 @Component({
   selector: 'app-account-list',
@@ -15,7 +17,7 @@ export class AccountListComponent implements OnInit {
   ngOnInit() {
     // Subscribe to the accounts observable to get updates
     this.userService.getAccounts().subscribe((accounts) => {
-      this.accounts = accounts;
+      this.accounts = accounts.map((user) => ({ ...user, expanded: false }));
     });
   }
 
@@ -24,4 +26,8 @@ export class AccountListComponent implements OnInit {
     const parts = path.split('/');
     return parts[parts.length - 1];
   }
+  toggleDetails(user: any) {
+    user.expanded = !user.expanded;
+  }
+  
 }

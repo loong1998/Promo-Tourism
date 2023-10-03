@@ -28,6 +28,8 @@ import {MatInputModule} from '@angular/material/input';
 import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
 import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 import { AccountListComponent } from './account-list/account-list.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+
 
 
 
@@ -74,7 +76,9 @@ const appRoutes: Routes = [
     MatNativeDateModule,
     MatFormFieldModule,
     MatInputModule,
+    MatExpansionModule,
     RouterModule.forRoot(appRoutes)
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

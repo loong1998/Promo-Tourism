@@ -7,4 +7,6 @@ export interface User {
     password: string;
     pdfFile: string;
     status: string;
+    expanded: boolean;
+    merchantID?: string;
   }

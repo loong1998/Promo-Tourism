@@ -1,10 +1,31 @@
-<div *ngFor="let user of accounts">
-  <h2>Username: {{ user.username }}</h2>
-  <p>Merchant Name: {{ user.merchantName }}</p>
-  <p>Contact Number: {{ user.contactNumber }}</p>
-  <p>Email: {{ user.email }}</p>
-  <p>Company Description: {{ user.companyDescription }}</p>
-  <p>Password: {{ user.password }}</p>
-  <p>Status: {{ user.status }}</p>
-  <iframe [src]="user.pdfFile" width="300px" height="300px">"assets/sample.pdf"</iframe>
+<div class="center-container">
+  <h1>Review Merchant Registration</h1>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let user of accounts" [expanded]="user.expanded">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="user-title">
+          <div class="left-content">
+            <p>Merchant ID: {{ user.merchantID }}</p>
+          </div>
+          <div class="right-content">
+            <p>Status: {{ user.status }}</p>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <div class="user-details">
+          <div class="contact-info">
+            <p><strong>Username:</strong> {{ user.username }}</p>
+            <p><strong>Merchant Name:</strong> {{ user.merchantName }}</p>
+            <p><strong>Contact Number:</strong> {{ user.contactNumber }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Company Description:</strong> {{ user.companyDescription }}</p>
+            <a class="download-link" [href]="'assets/sample.pdf'" download="{{ user.username }}.pdf">Download PDF</a> <br>
+            <button class="approve-button">Approve</button>
+            <button class="reject-button">Reject</button>
+          </div>
+        </div>    
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
