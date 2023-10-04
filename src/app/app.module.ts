@@ -29,7 +29,6 @@ import { ReviewMerchantRegistrationComponent } from './review-merchant-registrat
 import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -78,7 +77,6 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
-    MatSnackBar,
     RouterModule.forRoot(appRoutes)
     
   ],

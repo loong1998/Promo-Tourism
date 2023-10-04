@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AccountListComponent implements OnInit {
   accounts: User[] = [];
 
-  constructor(public userService: UserService, private snackBar: MatSnackBar) {}
+  constructor(public userService: UserService) {} //private snackBar: MatSnackBar
 
   ngOnInit() {
     // Subscribe to the accounts observable to get updates
@@ -31,12 +31,12 @@ export class AccountListComponent implements OnInit {
   
   approveUser(user: any) {
     user.status = 'Approved'; // Set the status to 'approve'
-    this.showSuccessMessage('User has been approved successfully.');
+    // this.showSuccessMessage('User has been approved successfully.');
   }
 
   rejectUser(user: any) {
     user.status = 'Rejected'; // Set the status to 'reject'
-    this.showSuccessMessage('User has been rejected successfully.');
+    // this.showSuccessMessage('User has been rejected successfully.');
   }
 
   areButtonsHidden(user: User): boolean {
@@ -45,10 +45,10 @@ export class AccountListComponent implements OnInit {
     return user.status === 'Approved' || user.status === 'Rejected';
   }
   
-  private showSuccessMessage(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 3000, // Duration in milliseconds (3 seconds in this example)
-    });
-  }
+  // private showSuccessMessage(message: string) {
+  //   this.snackBar.open(message, 'Close', {
+  //     duration: 3000, // Duration in milliseconds (3 seconds in this example)
+  //   });
+  // }
 
 }
