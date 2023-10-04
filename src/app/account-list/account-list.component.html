@@ -1,5 +1,5 @@
 <div class="center-container">
-  <h1>Review Merchant Registration</h1>
+  <h1>Merchant Account Application</h1>
   <mat-accordion>
     <mat-expansion-panel *ngFor="let user of accounts" [expanded]="user.expanded">
       <mat-expansion-panel-header>
@@ -20,9 +20,12 @@
             <p><strong>Contact Number:</strong> {{ user.contactNumber }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Company Description:</strong> {{ user.companyDescription }}</p>
-            <a class="download-link" [href]="'assets/sample.pdf'" download="{{ user.username }}.pdf">Download PDF</a> <br>
-            <button class="approve-button">Approve</button>
-            <button class="reject-button">Reject</button>
+            <a class="download-link" [href]="'assets/sample.pdf'" download="{{ user.username }}.pdf">Download PDF</a>
+            <div class="button-group" *ngIf="!areButtonsHidden(user)">
+              <br>
+              <button class="approve-button" (click)="approveUser(user)">Approve</button>
+              <button class="reject-button" (click)="rejectUser(user)">Reject</button>
+            </div>                        
           </div>
         </div>    
       </mat-panel-description>
