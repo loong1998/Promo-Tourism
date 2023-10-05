@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service'; // Import the UserService
 import { User } from '../services/user.model'; // Import the User model
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { SaveSuccessfulDialogComponent } from './save-successful-dialog/save-successful-dialog.component';
+import { MatDialog} from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-list',
@@ -11,7 +13,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class AccountListComponent implements OnInit {
   accounts: User[] = [];
 
-  constructor(public userService: UserService) {} //private snackBar: MatSnackBar
+  constructor(
+    public userService: UserService,
+    private router: Router,
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit() {
     // Subscribe to the accounts observable to get updates
@@ -31,12 +37,16 @@ export class AccountListComponent implements OnInit {
   
   approveUser(user: any) {
     user.status = 'Approved'; // Set the status to 'approve'
-    // this.showSuccessMessage('User has been approved successfully.');
+    this.dialog.open(SaveSuccessfulDialogComponent, {
+      disableClose: true,
+    });
   }
 
   rejectUser(user: any) {
     user.status = 'Rejected'; // Set the status to 'reject'
-    // this.showSuccessMessage('User has been rejected successfully.');
+    this.dialog.open(SaveSuccessfulDialogComponent, {
+      disableClose: true,
+    });
   }
 
   areButtonsHidden(user: User): boolean {

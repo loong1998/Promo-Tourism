@@ -29,6 +29,7 @@ import { ReviewMerchantRegistrationComponent } from './review-merchant-registrat
 import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
 
 
 
@@ -57,7 +58,8 @@ const appRoutes: Routes = [
     ProductDetailsComponent,
     ReviewMerchantRegistrationComponent,
     ReviewMerchantDetailsComponent,
-    AccountListComponent
+    AccountListComponent,
+    SaveSuccessfulDialogComponent
     
   ],
   imports: [

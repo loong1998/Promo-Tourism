@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.nextMerchantID = '003';
+    this.nextMerchantID = '005';
     this.registrationForm = this.formBuilder.group({
       username: ['', Validators.required],
       contactNumber: ['', [Validators.required, this.validateMalaysiaPhoneNumber]],
