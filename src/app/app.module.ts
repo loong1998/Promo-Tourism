@@ -31,6 +31,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
 import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
+import { ManageTourismProductComponent } from './manage-tourism-product/manage-tourism-product.component';
 
 
 
@@ -43,7 +44,8 @@ const appRoutes: Routes = [
   {path: "review-merchant-registration", component: ReviewMerchantRegistrationComponent},
   {path: "account-list", component:AccountListComponent},
   {path: "", component: CarouselComponent},
-  {path: 'productDetails/:productID', component: ProductDetailsComponent}
+  {path: 'productDetails/:productID', component: ProductDetailsComponent},
+  {path: 'manage-tourism-product', component: ManageTourismProductComponent}
 ];
 
 @NgModule({
@@ -61,7 +63,8 @@ const appRoutes: Routes = [
     ReviewMerchantDetailsComponent,
     AccountListComponent,
     SaveSuccessfulDialogComponent,
-    RejectDialogComponent
+    RejectDialogComponent,
+    ManageTourismProductComponent
     
   ],
   imports: [
