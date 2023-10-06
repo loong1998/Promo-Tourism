@@ -163,12 +163,16 @@ export class RegistrationComponent implements OnInit {
         // Show the file upload dialog
         this.dialog.open(MerchantSuccessDialogComponent, {
           disableClose: true,
+          width: 'auto',
+          height: '230px',
         });
       }
       else{
         console.log('Form Data:', formData);
         this.dialog.open(RegistrationSuccessDialogComponent, {
-          disableClose: true
+          disableClose: true,
+          width: 'auto',
+          height: '180px',
         });
       }
     }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service'; // Import the UserService
 import { User } from '../services/user.model'; // Import the User model
 import { SaveSuccessfulDialogComponent } from './save-successful-dialog/save-successful-dialog.component';
+import { RejectDialogComponent } from './reject-dialog/reject-dialog.component';
 import { MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 
@@ -39,13 +40,17 @@ export class AccountListComponent implements OnInit {
     user.status = 'Approved'; // Set the status to 'approve'
     this.dialog.open(SaveSuccessfulDialogComponent, {
       disableClose: true,
+      width: 'auto',
+      height: '230px',
     });
   }
 
   rejectUser(user: any) {
     user.status = 'Rejected'; // Set the status to 'reject'
-    this.dialog.open(SaveSuccessfulDialogComponent, {
+    this.dialog.open(RejectDialogComponent, {
       disableClose: true,
+      width: 'auto',
+      height: '180px',
     });
   }
 

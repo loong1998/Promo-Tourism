@@ -57,7 +57,7 @@ export class UserService {
     },
   ];
   private accountsSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.accounts);
-  private merchantIDCounter: number = 0;
+  private merchantIDCounter: number = 4;
   constructor() {}
 
   getAccounts(): Observable<User[]> {

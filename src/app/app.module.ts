@@ -30,6 +30,7 @@ import { ReviewMerchantDetailsComponent } from './review-merchant-registration/r
 import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
+import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
 
 
 
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     ReviewMerchantRegistrationComponent,
     ReviewMerchantDetailsComponent,
     AccountListComponent,
-    SaveSuccessfulDialogComponent
+    SaveSuccessfulDialogComponent,
+    RejectDialogComponent
     
   ],
   imports: [
