@@ -1,0 +1,93 @@
+/* Style the container */
+.container {
+    max-width: 500px;
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center text content */
+}
+
+/* Style the form elements */
+.form-group {
+    text-align: left; /* Reset text alignment for labels and inputs */
+    max-width: 80%;
+    margin: 0 auto; /* Center the form within the container */
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"]{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+textarea {
+    max-width: 100%; /* Use a specific width value, e.g., width: 300px; */
+    width: 100%; /* Ensure a fixed width */
+    padding: 10px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical; /* Allow vertical resizing while fixing width */
+    margin-bottom: 10px;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center; /* Center the button text */
+    margin-top: 20px; /* Add space at the top */
+    display: block; /* Center the button within the form */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Style the bullet-point list */
+.bullet-list {
+    list-style: disc;
+}
+
+/* Style the image and file input */
+.image-group {
+    display: flex;
+    flex-direction: column; /* Place elements in a column layout */
+    align-items: center;
+    justify-content: center; /* Center elements horizontally */
+    margin-top: 10px; /* Add space between label and image */
+}
+
+input[type="file"] {
+    margin-top: 10px; /* Add space between file input and image */
+}
+
+#imagePreview {
+    max-width: 100px; /* Adjust image width as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-left: auto; /* Center the image horizontally */
+    margin-right: auto; /* Center the image horizontally */
+    margin-top: 10px; /* Add space between file input and image */
+}
+

@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product} from './products.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable(
     {
@@ -31,7 +32,18 @@ export class ProductService{
             rating: 4 },
     ];
 
+    private productSubject = new BehaviorSubject<Product[]>(this.products);
+
     getProducts(){
-        return this.products;
+        return this.productSubject.asObservable();
+    }
+
+    updateProduct(productId: string, updatedProduct: Product) {
+        // Find the product to update and update it in the products array
+        const index = this.products.findIndex((product) => product.productID === productId);
+        if (index !== -1) {
+          this.products[index] = updatedProduct;
+          this.productSubject.next(this.products); // Notify subscribers of the updated data
+        }
     }
 }

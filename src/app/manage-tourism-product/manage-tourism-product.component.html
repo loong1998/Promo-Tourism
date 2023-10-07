@@ -1,7 +1,11 @@
 <div class="product-list">
-    <h1>Manage Tourism Product</h1>
+    <div class="header-container">
+        <h1>Manage Tourism Product</h1>
+        <button (click)="addNewProduct()" class="add-new-button">Add New</button>
+    </div>
     <div class="product-header">
         <div>Product ID</div>
+        <div>Tour Title</div>
         <div>Image</div>
         <div>Description</div>
         <div>Rating</div>
@@ -10,13 +14,17 @@
 
     <div *ngFor="let product of products" class="product-row">
         <div>{{ product.productID }}</div>
+        <div>{{ product.tourTitle }}</div>
         <div><img [src]="product.imageUrl" alt="Product Image" class="product-image"></div>
-        <div>{{ product.descriptions[0] }}</div>
+        <div class="product-description">
+            <ul>
+              <li *ngFor="let description of product.descriptions">{{ description }}</li>
+            </ul>
+          </div>
         <div>{{ product.rating }}</div>
         <div class="button-container">
             <button (click)="editProduct(product)" class="action-button green-button">Edit</button>
             <button (click)="deleteProduct(product)" class="action-button red-button">Delete</button>
         </div>
-    </div><br>
-    <button (click)="addNewProduct()" class="add-new-button">Add New Product</button>
+    </div>
 </div>

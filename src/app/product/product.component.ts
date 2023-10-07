@@ -17,7 +17,9 @@ export class ProductComponent{
         
     }
 
-    ngOnInit(): void {
-        this.products = this.productsService.getProducts();
-    }
+    ngOnInit() {
+    this.productsService.getProducts().subscribe((products) => {
+      this.products = products; // Assign the data received from the Observable to the products array
+    });
+  }
 }

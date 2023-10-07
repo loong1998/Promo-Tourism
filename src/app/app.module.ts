@@ -32,6 +32,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
 import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
 import { ManageTourismProductComponent } from './manage-tourism-product/manage-tourism-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { ProductService } from './services/products.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -45,7 +48,8 @@ const appRoutes: Routes = [
   {path: "account-list", component:AccountListComponent},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
-  {path: 'manage-tourism-product', component: ManageTourismProductComponent}
+  {path: 'manage-tourism-product', component: ManageTourismProductComponent},
+  { path: 'edit-product/:id', component: EditProductComponent }
 ];
 
 @NgModule({
@@ -64,7 +68,8 @@ const appRoutes: Routes = [
     AccountListComponent,
     SaveSuccessfulDialogComponent,
     RejectDialogComponent,
-    ManageTourismProductComponent
+    ManageTourismProductComponent,
+    EditProductComponent,
     
   ],
   imports: [
@@ -84,10 +89,11 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
+    MatSnackBarModule,
     RouterModule.forRoot(appRoutes)
     
   ],
-  providers: [],
+  providers: [ProductService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

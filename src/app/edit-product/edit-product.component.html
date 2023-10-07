@@ -1,0 +1,24 @@
+<div class="container">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="productID">Product ID: {{ productForm.get('productID').value }}</label>
+      </div>
+      <div class="form-group">
+        <label for="tourTitle">Tour Title:</label>
+        <input type="text" id="tourTitle" formControlName="tourTitle">
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image:</label>
+        <div class="image-group">
+          <input type="file" id="imageInput" (change)="onImageSelected($event)" accept="image/*">
+          <img [src]="productForm.get('imageUrl').value" alt="Product Image" id="imagePreview">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="descriptions">Descriptions:</label>
+        <textarea id="descriptions" formControlName="descriptions" class="bullet-list"></textarea>
+      </div>
+      <button type="submit" class="action-button green-button">Save</button>
+    </form>
+  </div>
+  
