@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product} from './products.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable(
     {
@@ -38,6 +38,11 @@ export class ProductService{
         return this.productSubject.asObservable();
     }
 
+    getProductsArray(): Product[] {
+        return this.products;
+      }
+      
+
     updateProduct(productId: string, updatedProduct: Product) {
         // Find the product to update and update it in the products array
         const index = this.products.findIndex((product) => product.productID === productId);
@@ -46,4 +51,23 @@ export class ProductService{
           this.productSubject.next(this.products); // Notify subscribers of the updated data
         }
     }
+    deleteProduct(productId: string): Observable<boolean> {
+        // Find the product to delete and remove it from the products array
+        const index = this.products.findIndex((product) => product.productID === productId);
+        if (index !== -1) {
+          this.products.splice(index, 1);
+          this.productSubject.next(this.products); // Notify subscribers of the updated data
+          return of(true); // Return an Observable indicating success
+        }
+        return of(false); // Return an Observable indicating failure
+    }
+
+    addProduct(newProduct: Product) {
+        // Add the new product to your products array
+        this.products.push(newProduct);
+      
+        // Notify subscribers of the updated data
+        this.productSubject.next(this.products);
+      }
+      
 }

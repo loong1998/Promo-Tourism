@@ -1,0 +1,41 @@
+<div class="container">
+    <h1>Add New Product</h1>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <div class="error-message" *ngIf="formSubmitted && productForm.get('tourTitle').hasError('required')">**Please enter your tour title**</div>
+        <div class="input-row">
+            <label for="tourTitle">Tour Title:</label>
+            <input type="text" id="tourTitle" formControlName="tourTitle" placeholder="Enter your tour title">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="error-message" *ngIf="formSubmitted && productForm.get('imageUrl').hasError('required')">**Please upload your product image**</div>
+        <div class="input-row">
+          <label for="imageUrl">Image URL:</label>
+          <input type="file" id="imageUrl" (change)="onImageSelected($event)" accept="image/*">
+        </div>
+      </div> <br>
+      <div class="form-group" *ngIf="imageSelected">
+        <img [src]="productForm.get('imageUrl').value" alt="Product Image" id="imagePreview">
+      </div>
+      <div class="form-group">
+        <label for="descriptions">Descriptions:</label>
+        <div class="error-message" *ngIf="formSubmitted && productForm.get('descriptions').hasError('required')">**Please upload your product image**</div>
+      </div>
+      <div class="form-group">
+        <textarea
+          id="descriptions"
+          formControlName="descriptions"
+          class="bullet-list"
+          placeholder="Enter your descriptions here..."
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <div class="button-group">
+          <button type="submit" class="action-button green-button">Save</button>
+          <button type="button" class="action-button red-button" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  

@@ -104,4 +104,8 @@
 .add-new-button:hover {
     background-color: rgb(73, 73, 73);
 }
+
+.no-records-message{
+  color: red;
+}
   

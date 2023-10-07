@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../services/products.service';
 import { Product } from '../services/products.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-product',
@@ -70,9 +71,9 @@ export class EditProductComponent implements OnInit {
           // Initialize the form with fetched product data
           this.productForm = this.formBuilder.group({
             productID: [this.product.productID],
-            tourTitle: [this.product.tourTitle],
+            tourTitle: [this.product.tourTitle, Validators.required],
             imageUrl: [this.product.imageUrl],
-            descriptions: [this.product.descriptions.join('\n')],
+            descriptions: [this.product.descriptions.join('\n'), Validators.required],
             rating: [this.product.rating]
           });
         } else {
@@ -82,16 +83,28 @@ export class EditProductComponent implements OnInit {
     }
 
     onSubmit() {
-      // Handle the form submission, update the product data using ProductService
-      const updatedProduct = this.productForm.value;
-      updatedProduct.descriptions = updatedProduct.descriptions.split('\n');
-      this.productService.updateProduct(this.productId, updatedProduct);
-      
-      this.snackBar.open('Product updated successfully!', 'Close', {
-        duration: 2000, // Adjust the duration as needed
-      });
+      if (this.productForm.valid) {
+          // Form is valid, proceed with saving
+          const updatedProduct = this.productForm.value;
+          updatedProduct.descriptions = updatedProduct.descriptions.split('\n');
+          this.productService.updateProduct(this.productId, updatedProduct);
+          
+          this.snackBar.open('Product updated successfully!', 'Close', {
+              duration: 2000,
+          });
+  
+          // Redirect back to the product list page or any other desired route
+          this.router.navigate(['/manage-tourism-product']);
+      } else {
+          // Form is invalid, display an error message or take appropriate action
+          this.snackBar.open('Please fill in all required fields.', 'Close', {
+              duration: 2000,
+          });
+      }
+    }
 
-      // Redirect back to the product list page or any other desired route
-      this.router.navigate(['/manage-tourism-product']);
+    onCancel() {
+      // Navigate back to the previous page
+      this.router.navigate(['/manage-tourism-product'], { relativeTo: this.route });
     }
 }

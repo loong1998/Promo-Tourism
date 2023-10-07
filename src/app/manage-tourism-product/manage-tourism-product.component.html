@@ -11,6 +11,7 @@
         <div>Rating</div>
         <div>Actions</div>
     </div>
+    
 
     <div *ngFor="let product of products" class="product-row">
         <div>{{ product.productID }}</div>
@@ -26,5 +27,9 @@
             <button (click)="editProduct(product)" class="action-button green-button">Edit</button>
             <button (click)="deleteProduct(product)" class="action-button red-button">Delete</button>
         </div>
+    </div>
+
+    <div *ngIf="noRecords" class="no-records-message">
+        No records found.
     </div>
 </div>

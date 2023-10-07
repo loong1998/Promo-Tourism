@@ -35,6 +35,7 @@ import { ManageTourismProductComponent } from './manage-tourism-product/manage-t
 import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductService } from './services/products.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddProductComponent } from './add-product/add-product.component';
 
 
 
@@ -49,7 +50,8 @@ const appRoutes: Routes = [
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
   {path: 'manage-tourism-product', component: ManageTourismProductComponent},
-  { path: 'edit-product/:id', component: EditProductComponent }
+  { path: 'edit-product/:id', component: EditProductComponent },
+  { path: 'add-product', component: AddProductComponent }
 ];
 
 @NgModule({
@@ -70,6 +72,7 @@ const appRoutes: Routes = [
     RejectDialogComponent,
     ManageTourismProductComponent,
     EditProductComponent,
+    AddProductComponent,
     
   ],
   imports: [
