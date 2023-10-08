@@ -18,6 +18,7 @@ export class UserService {
       pdfFile: 'assets/sample.pdf',
       status: 'pending',
       expanded: false,
+      userType: 'merchant',
     },
     { 
       merchantID :'002',
@@ -30,6 +31,7 @@ export class UserService {
       pdfFile: 'assets/sample.pdf',
       status: 'pending',
       expanded: false,
+      userType: 'merchant',
     },
     { 
       merchantID :'003',
@@ -42,6 +44,7 @@ export class UserService {
       pdfFile: 'assets/sample.pdf',
       status: 'Approved',
       expanded: false,
+      userType: 'merchant',
     },
     { 
       merchantID :'004',
@@ -54,6 +57,7 @@ export class UserService {
       pdfFile: 'assets/sample.pdf',
       status: 'Rejected',
       expanded: false,
+      userType: 'merchant',
     },
   ];
   private accountsSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.accounts);
@@ -65,10 +69,17 @@ export class UserService {
   }
 
   addAccount(account: User) {
-    this.merchantIDCounter++;
-    const merchantID = `00${this.merchantIDCounter}`.slice(-3); // Format as '001', '002', etc.
-    account.merchantID = merchantID;
+    if (account.userType === 'merchant') {
+      this.merchantIDCounter++; // Increment the counter only for merchant users
+      const merchantID = `00${this.merchantIDCounter}`.slice(-3); // Format as '001', '002', etc.
+      account.merchantID = merchantID;
+    }
+
     this.accounts.push(account);
     this.accountsSubject.next(this.accounts);
+  }
+
+  getLastMerchantID(): string {
+    return `00${this.merchantIDCounter}`.slice(-3);
   }
 }

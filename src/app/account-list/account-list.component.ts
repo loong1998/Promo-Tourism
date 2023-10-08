@@ -23,7 +23,7 @@ export class AccountListComponent implements OnInit {
   ngOnInit() {
     // Subscribe to the accounts observable to get updates
     this.userService.getAccounts().subscribe((accounts) => {
-      this.accounts = accounts.map((user) => ({ ...user, expanded: false}));
+      this.accounts = accounts.filter(user => user.userType === 'merchant');
     });
   }
 

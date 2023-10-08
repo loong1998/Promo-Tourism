@@ -133,42 +133,56 @@ export class RegistrationComponent implements OnInit {
     // Check if the form is valid
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
-      console.log('Form Data:', formData);
-      if (this.registrationForm.get('userType')?.value === 'merchant') {
+  
+      // Get the selected userType
+      const userType = formData.userType;
+  
+      // Initialize a base user object
+      const newUser: User = {
+        username: formData.username,
+        contactNumber: formData.contactNumber,
+        email: formData.email,
+        password: formData.password,
+        status: 'pending',
+        expanded: false,
+        userType: userType, // Set userType here
+      };
+  
+      // Additional properties for merchant users
+      if (userType === 'merchant') {
         // Check if a PDF file is selected
         if (!this.selectedPdfFile) {
           // Show an error message for the PDF file input
           this.registrationForm.get('pdfFile')?.setErrors({ required: true });
           return; // Stop registration process if PDF is not selected
         }
-    
+  
         // PDF file is selected, you can proceed with registration
         // Implement registration logic here
-        const newUser: User = {
-          username: formData.username,
-          merchantName: formData.merchantName,
-          contactNumber: formData.contactNumber,
-          email: formData.email,
-          companyDescription: formData.companyDescription,
-          password: formData.password,
-          pdfFile: formData.pdfFile,
-          status: 'pending',
-          expanded: false,
-          merchantID: this.nextMerchantID,
-        };
-        const nextIDNumber = parseInt(this.nextMerchantID) + 1;
-        this.nextMerchantID = nextIDNumber.toString().padStart(3, '0');
-        this.userService.addAccount(newUser);
-    
+  
+        // Assign merchant-specific properties
+        newUser.merchantName = formData.merchantName;
+        newUser.companyDescription = formData.companyDescription;
+        newUser.pdfFile = formData.pdfFile;
+  
+        // Generate merchantID only for merchant users
+        const nextMerchantID = this.generateNextMerchantID();
+        newUser.merchantID = nextMerchantID;
+      }
+  
+      // Add the user to the service
+      this.userService.addAccount(newUser);
+  
+      // Show the appropriate success dialog based on userType
+      if (userType === 'merchant') {
         // Show the file upload dialog
         this.dialog.open(MerchantSuccessDialogComponent, {
           disableClose: true,
           width: 'auto',
           height: '230px',
         });
-      }
-      else{
-        console.log('Form Data:', formData);
+      } else {
+        // Show the success dialog for regular user registration
         this.dialog.open(RegistrationSuccessDialogComponent, {
           disableClose: true,
           width: 'auto',
@@ -176,7 +190,15 @@ export class RegistrationComponent implements OnInit {
         });
       }
     }
-  }  
+  }
+  
+  private generateNextMerchantID(): string {
+    const lastMerchantID = this.userService.getLastMerchantID();
+    const nextIDNumber = parseInt(lastMerchantID) + 1;
+    return nextIDNumber.toString().padStart(3, '0');
+  }
+  
+      
 
   onLogin() {
     this.router.navigate(['/login']);
