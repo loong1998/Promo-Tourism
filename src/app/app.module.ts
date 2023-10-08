@@ -9,6 +9,12 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { ProductComponent } from './product/product.component';
 import { LoginComponent } from './login/login.component';
 import { ProductDetailsComponent } from './product/productDetails/product-details.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ReviewProductComponent } from './reviewProduct/review-product.component';
+import { SubmitReviewComponent } from './reviewProduct/submitReview/submit-review.component';
+import { AnalyticsReportComponent } from './analytics-report/analytics-report.component';
+import { PaymentModalComponent } from './payment/paymentModal/payment-modal.component';
+import { SubmitReviewModalComponent } from './reviewProduct/submitReview/submit-review-modal/submit-review-modal';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -36,7 +42,8 @@ import { EditProductComponent } from './edit-product/edit-product.component';
 import { ProductService } from './services/products.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AddProductComponent } from './add-product/add-product.component';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ChartModule } from 'angular-highcharts';
 
 
 
@@ -51,7 +58,13 @@ const appRoutes: Routes = [
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
   {path: 'manage-tourism-product', component: ManageTourismProductComponent},
   { path: 'edit-product/:id', component: EditProductComponent },
-  { path: 'add-product', component: AddProductComponent }
+  { path: 'add-product', component: AddProductComponent },
+  {path: "productDetails/:productID/payment", component: PaymentComponent},
+  {path: "reviewProduct", component: ReviewProductComponent},
+  {path: "submitReview/:productID", component: SubmitReviewComponent},
+  {path: "analyticsReport", component: AnalyticsReportComponent},
+  {path: "paymentModal", component: PaymentModalComponent},
+  {path: "submitReviewModal", component: SubmitReviewModalComponent}
 ];
 
 @NgModule({
@@ -73,7 +86,12 @@ const appRoutes: Routes = [
     ManageTourismProductComponent,
     EditProductComponent,
     AddProductComponent,
-    
+    PaymentComponent,
+    ReviewProductComponent,
+    SubmitReviewComponent,
+    AnalyticsReportComponent,
+    PaymentModalComponent,
+    SubmitReviewModalComponent
   ],
   imports: [
     BrowserModule,
@@ -93,6 +111,8 @@ const appRoutes: Routes = [
     MatInputModule,
     MatExpansionModule,
     MatSnackBarModule,
+    NoopAnimationsModule,
+    ChartModule,
     RouterModule.forRoot(appRoutes)
     
   ],

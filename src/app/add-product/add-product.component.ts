@@ -73,6 +73,7 @@ export class AddProductComponent implements OnInit {
         imageUrl: this.productForm.value.imageUrl,
         descriptions: this.productForm.value.descriptions.split('\n'),
         rating: 0, // Set a default rating (you can change it as needed)
+        price: 50
       };
   
       this.productService.addProduct(newProduct);

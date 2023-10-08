@@ -1,0 +1,77 @@
+<!-- <div *ngFor="let booking of bookings">
+    <p>
+        {{booking.tourName}}
+    </p>
+</div> -->
+<h1 class="h1-deco">My Bookings</h1><br>
+
+<div id="container" *ngFor="let booking of bookings">
+    
+	
+    <!-- Start	Product details -->
+    <div class="product-details">
+            
+            <!-- 	Product Name -->
+        <h1>{{booking.tourName}}</h1>
+        
+            
+        
+    <!-- The most important information about the product -->
+        <table class="table">
+            <tr>
+                <td>Number of Pax</td>
+                <td>{{booking.numOfPax}}</td>
+            </tr>
+            <tr>
+                <td>Total Price</td>
+                <td>RM {{booking.totalPrice}}</td>
+            </tr>
+            <tr>
+                <!-- <td>Total Price</td> -->
+                <td>{{booking.visitDate | date:'dd-MM-yyyy'}}</td>
+            </tr>
+        </table>
+                
+    
+            
+            
+        <!-- 		Control -->
+        <div class="control">
+            <mat-dialog-actions>
+                <button class="btn" mat-button>
+                    <a routerLink="/submitReview/{{booking.productID}}">
+                        <span class="buy">Write a Review</span>
+                    </a>
+                    
+                </button>
+            </mat-dialog-actions>
+        </div>
+
+        <!-- <div>
+            <textarea matInput #reviewInput rows=6 cols=10 placeholder='Enter your review here' class="textarea-deco"></textarea>
+            
+        </div>
+        <input type = "submit" value ="Submit"/> -->
+                
+    </div>
+        
+    <!-- 	End	Product details   -->
+        
+        
+        
+    <!-- 	Start product image & Information -->
+        
+    <div class="product-image">
+        
+        <img [src]="booking.imageUrl" alt="Omar Dsoky">
+    </div>
+    <!--  End product image  -->
+    
+    
+</div>
+
+
+
+    
+    
+    

@@ -1,0 +1,78 @@
+<body>
+    <div class="model">
+      <div class="payment" *ngFor="let bookingDetail of booking">
+        <div class="receipt-box"  id="print-section">
+          <h3>Reciept Summary</h3>
+            <table class="table">
+                <tr>
+                  <td>Tour Name</td>
+                  <td>{{bookingDetail.tourName}}</td>
+                </tr>
+                <tr>
+                  <td>Number of Pax</td>
+                  <td>{{bookingDetail.numOfPax}}</td>
+                </tr>
+                <tr>
+                  <td>Contact Number</td>
+                  <td>{{bookingDetail.contactNum}}</td>
+                </tr>
+                <tr>
+                  <td>Booking Date</td>
+                  <td>{{bookingDetail.visitDate | date:'dd-MM-yyyy'}}</td>
+                </tr>
+                <tfoot>
+                  <tr>
+                      <td>Sum</td>
+                      <td>RM {{bookingDetail.totalPrice}}</td>
+                  </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="payment-info">
+          <h3>Payment Info</h3>
+            <form #paymentDetail="ngForm" (submit)="onPay(paymentDetail)">
+              <mat-form-field class="mb-0">
+                <mat-label>Credit Card Number</mat-label>
+                <input matInput required type="string" name="creditCardNumInput"
+                  ngModel #creditCardNumInput="ngModel">
+                <mat-error *ngIf="creditCardNumInput.invalid">Please enter a valid credit card number!</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="mb-0">
+                <mat-label>Expiry Date</mat-label>
+                <input matInput required type="string" name="expDateInput"
+                  ngModel #expDateInput="ngModel">
+                <mat-error *ngIf="expDateInput.invalid">Please enter a valid expiry date! (e.g. 11/11)</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="mb-0">
+                <mat-label>CVV</mat-label>
+                <input matInput required type="string" name="cvvInput"
+                  ngModel #cvvInput="ngModel">
+                <mat-error *ngIf="cvvInput.invalid">Please enter a valid CVV! (e.g. 111)</mat-error>
+              </mat-form-field>
+
+                <br><br>
+            
+                <p hidden ngModel [(ngModel)]="tourName" name="tourName">{{bookingDetail.tourName}}</p>
+
+                <mat-dialog-actions>
+                  <button class="btn" mat-button color="primary" type="submit"
+                    (click)="openModal()" printSectionId="print-section" ngxPrint>
+                    Pay & Print
+                  </button>
+                </mat-dialog-actions>
+                
+              </form>
+        </div>
+
+        
+      </div>
+
+      
+    </div>
+
+    
+  </body>
+

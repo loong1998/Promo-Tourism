@@ -1,0 +1,17 @@
+.chart{
+    display: flex;
+    margin: 20px;
+}
+
+.barLayout{
+    flex: 1;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    height:400px;
+    margin-right: 20px;
+}
+
+.totalSale{
+    flex: 1;
+    box-shadow: 10px 10px 5px #aaaaaa;
+    height:400px;
+}

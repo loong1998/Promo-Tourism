@@ -1,0 +1,29 @@
+<div class="formbold-main-wrapper">
+    <!-- Author: FormBold Team -->
+    <!-- Learn More: https://formbold.com -->
+    
+    <div class="formbold-form-wrapper">
+        <h3>Review for {{bookingProduct.tourName}}</h3>
+      <form action="https://formbold.com/s/FORM_ID" #submitReview="ngForm" (submit)="onSubmitReview(submitReview)">
+        <mat-form-field>
+           <div class="formbold-textarea">
+              <textarea
+                matInput
+                rows="6"
+                name="reviewInput"
+                #reviewInput="ngModel"
+                ngModel
+                placeholder="Write your review..."
+                class="formbold-form-input"
+              ></textarea>
+          </div> 
+        </mat-form-field>
+          
+        <button mat-raised-button type="submit" class="formbold-btn" (click)="openModal()">
+            Submit Review
+        </button>
+        
+      </form>
+      
+    </div>
+  </div>

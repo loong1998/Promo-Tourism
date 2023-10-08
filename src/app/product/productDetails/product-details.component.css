@@ -1,13 +1,13 @@
 .container-xxl{
     width:100%;
-    padding-left: 100px;
     margin-right:auto;
     margin-left:auto;
+    
 }
 
 .py-5{
     padding-top:3rem !important;
-    padding-bottom:3rem !important
+    padding-bottom:3rem !important;
     
 }
 
@@ -25,7 +25,8 @@
     --bs-gutter-y: 0;
     display:flex;
     flex-wrap:wrap;
-    
+    margin-right:auto;
+    margin-left:auto;
 }
 
 .g-5,.gx-5{
@@ -39,8 +40,8 @@
 .col-lg-6{
     flex:0 0 auto;
     width:40%;
-    
 }
+
 
 .position-relative{
     position:relative !important;
@@ -125,4 +126,43 @@
     font-weight: 600;
     transition: .5s;
     border: 2px solid;
+}
+
+.toggle-style{
+    align-items: right;
+    text-align: right;
+}
+
+.columns {
+    display:flex;
+    justify-content:space-between;
+    flex-direction:row;
+    flex-wrap:wrap;
+}
+
+.a-text-deco{
+    text-decoration: none;
+    color: #fff;
+}
+
+.button-deco{
+    background-color: #86B817;
+    color: #fff;
+    font-weight: bold;
+    height: 55px;
+}
+
+.flexDiplay{
+    display: flex;
+    padding-left: 200px;
+}
+
+.numPax{
+    flex: 1;
+    margin-right: 20px;
+    width: 50%;
+}
+
+.padding{
+    margin-top: 20px;
 }

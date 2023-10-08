@@ -10,16 +10,15 @@ import { ProductService } from "../services/products.service";
     }
 )
 
-export class ProductComponent{
+export class ProductComponent implements OnInit{
     products: Product[] = [];
 
     constructor(public productsService: ProductService){
         
     }
 
-    ngOnInit() {
-    this.productsService.getProducts().subscribe((products) => {
-      this.products = products; // Assign the data received from the Observable to the products array
-    });
-  }
+    ngOnInit(): void {
+      this.products = this.productsService.getProductsArray();
+    }
+
 }
