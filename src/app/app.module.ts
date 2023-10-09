@@ -31,8 +31,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
-import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
@@ -52,7 +50,6 @@ const appRoutes: Routes = [
   {path: "home", component: CarouselComponent},
   {path: "login", component: LoginComponent },
   {path: "registration", component: RegistrationComponent},
-  {path: "review-merchant-registration", component: ReviewMerchantRegistrationComponent},
   {path: "account-list", component:AccountListComponent},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
@@ -78,8 +75,6 @@ const appRoutes: Routes = [
     RegistrationSuccessDialogComponent,
     MerchantSuccessDialogComponent,
     ProductDetailsComponent,
-    ReviewMerchantRegistrationComponent,
-    ReviewMerchantDetailsComponent,
     AccountListComponent,
     SaveSuccessfulDialogComponent,
     RejectDialogComponent,
