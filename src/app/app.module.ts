@@ -18,8 +18,6 @@ import { SubmitReviewModalComponent } from './reviewProduct/submitReview/submit-
 import { RegistrationComponent } from './registration/registration.component';
 import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
 import { MerchantSuccessDialogComponent } from './registration/merchant-success-dialog/merchant-success-dialog.component';
-import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
-import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
 import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
@@ -40,6 +38,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -54,7 +53,6 @@ const appRoutes: Routes = [
   {path: "home", component: CarouselComponent},
   {path: "login", component: LoginComponent },
   {path: "registration", component: RegistrationComponent},
-  {path: "review-merchant-registration", component: ReviewMerchantRegistrationComponent},
   {path: "account-list", component:AccountListComponent},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
@@ -80,8 +78,6 @@ const appRoutes: Routes = [
     RegistrationSuccessDialogComponent,
     MerchantSuccessDialogComponent,
     ProductDetailsComponent,
-    ReviewMerchantRegistrationComponent,
-    ReviewMerchantDetailsComponent,
     AccountListComponent,
     SaveSuccessfulDialogComponent,
     RejectDialogComponent,
