@@ -22,16 +22,15 @@ export class PaymentComponent implements OnInit{
     public paidProducts: PaidProduct[] = [];
 
     tourName: string;
-    // dateFormat = formatDate(this.PurchaseProduct.visitDate, 'dd-MM-yyyy', this.locale);
 
     constructor(public activatedRouted: ActivatedRoute,
-        public BookingService: BookingService, public ReviewProductService: ReviewProductService,
+        public BookingService: BookingService,
+        public ReviewProductService: ReviewProductService,
         public router: Router, public matDialog: MatDialog){
 
     }
 
     ngOnInit(): void{
-        // dateFormat = formatDate(this.purchaseProduct.visitDate, 'dd-MM-yyyy', this.locale);
         this.booking.push(this.BookingService.getLastPurchaseProduct());
     }
 
@@ -46,7 +45,6 @@ export class PaymentComponent implements OnInit{
             return;
         }
 
-        // this.BookingService.addPurchaseProduct(this.);
         this.router.navigate(['/home'])
     }
 }

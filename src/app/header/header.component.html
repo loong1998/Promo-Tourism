@@ -4,8 +4,12 @@
     <div name="headerRight" id="headerRight">
       <ul>
         <li><a routerLink="/home" mat-button>Home</a></li>
-        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'"><a routerLink="/product" mat-button>Product</a></li>
-        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'"><a routerLink="/reviewProduct" mat-button>Review Product</a></li>
+        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'"><a mat-button (click)="checkLoginP()">Product</a></li>
+
+        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'">
+          <a mat-button (click)="checkLoginP()">Review Product</a>
+        </li>
+        
         <li *ngIf="isLoggedIn && userRole === 'officer'">
           <a routerLink="/account-list" mat-button>Account Management</a>
         </li>

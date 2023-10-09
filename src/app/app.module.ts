@@ -15,15 +15,24 @@ import { SubmitReviewComponent } from './reviewProduct/submitReview/submit-revie
 import { AnalyticsReportComponent } from './analytics-report/analytics-report.component';
 import { PaymentModalComponent } from './payment/paymentModal/payment-modal.component';
 import { SubmitReviewModalComponent } from './reviewProduct/submitReview/submit-review-modal/submit-review-modal';
+import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
+import { MerchantSuccessDialogComponent } from './registration/merchant-success-dialog/merchant-success-dialog.component';
+import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
+import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
+import { AccountListComponent } from './account-list/account-list.component';
+import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
+import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
+import { ManageTourismProductComponent } from './manage-tourism-product/manage-tourism-product.component';
+import { EditProductComponent } from './edit-product/edit-product.component';
+import { ProductService } from './services/products.service';
+import { AddProductComponent } from './add-product/add-product.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { RegistrationComponent } from './registration/registration.component';
-import { RegistrationSuccessDialogComponent } from './registration/registration-success-dialog/registration-success-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MerchantSuccessDialogComponent } from './registration/merchant-success-dialog/merchant-success-dialog.component';
 import {MatCardModule} from '@angular/material/card';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {MatIconModule} from '@angular/material/icon';
@@ -31,19 +40,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { ReviewMerchantRegistrationComponent } from './review-merchant-registration/review-merchant-registration.component';
-import { ReviewMerchantDetailsComponent } from './review-merchant-registration/review-merchant-details/review-merchant-details.component';
-import { AccountListComponent } from './account-list/account-list.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { SaveSuccessfulDialogComponent } from './account-list/save-successful-dialog/save-successful-dialog.component';
-import { RejectDialogComponent } from './account-list/reject-dialog/reject-dialog.component';
-import { ManageTourismProductComponent } from './manage-tourism-product/manage-tourism-product.component';
-import { EditProductComponent } from './edit-product/edit-product.component';
-import { ProductService } from './services/products.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { AddProductComponent } from './add-product/add-product.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartModule } from 'angular-highcharts';
+import {NgxPrintModule} from 'ngx-print';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -113,6 +115,8 @@ const appRoutes: Routes = [
     MatSnackBarModule,
     NoopAnimationsModule,
     ChartModule,
+    NgxPrintModule,
+    HttpClientModule,
     RouterModule.forRoot(appRoutes)
     
   ],

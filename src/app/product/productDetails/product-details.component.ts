@@ -33,29 +33,32 @@ export class ProductDetailsComponent implements OnInit{
     }
 
     ngOnInit(): void{
-        // this.products = this.productsService.getProducts();
-        
+        //get the selected product's productID and store in selectedProductID
         this.selectedProductID = this.activatedRouted.snapshot.paramMap.get('productID');
+
+        //find the selected productID that match with the existing productID and store the product object
+        //in products variable
         this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
 
+        //get the product's description and store in productdesc variable
         this.splitDesc();
     }
 
     onConfirmBookingDetails(form: NgForm){
+        //perform validation
         if(form.invalid){
             return;
         }
-        // else if(form.)
 
-        // pax = form.value.numOfPax;
-
-        this.bookingService.addPurchaseProduct(this.products.productID, this.products.tourTitle, this.products.imageUrl, form.value.numOfPax,
+        this.bookingService.addPurchaseProduct(this.products.productID, this.products.tourTitle,
+            this.products.imageUrl, form.value.numOfPax,
             form.value.contactNum, form.value.visitDate, this.totalPrice);
             
         this.router.navigate(['/productDetails/{{products.productID}}/payment'])
         form.resetForm();
     }
 
+    //calculate the total price of the tour based on the tour price and number of person
     calculateTotalPrice(){
         return this.totalPrice = this.products.price * this.pax;
     }
@@ -63,7 +66,6 @@ export class ProductDetailsComponent implements OnInit{
     splitDesc(){
         if(this.products.descriptions != null){
             this.productDescs = this.products.descriptions;
-            //console.log(this.productDescs);
         }
     }
 }

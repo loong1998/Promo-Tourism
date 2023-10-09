@@ -8,6 +8,7 @@ import { Chart } from 'angular-highcharts';
   templateUrl: './analytics-report.component.html',
   styleUrls: ['./analytics-report.component.css']
 })
+
 export class AnalyticsReportComponent implements OnInit{
   bookings: Booking[] = []
 
@@ -32,7 +33,6 @@ export class AnalyticsReportComponent implements OnInit{
     }
   )
 
-  
   constructor(public bookingService: BookingService){
 
   }

@@ -25,4 +25,31 @@ export class HeaderComponent {
     // Redirect to the login page after logout
     this.router.navigate(['/login']);
   }
+
+  //To check if user is logged in
+  checkLoginP(){
+    //if isLoggedIn = false
+    if(!this.isLoggedIn){
+      //navigate to login page
+      this.router.navigate(['/login']);
+    }
+    //if isLoggedIn = true
+    else if(this.isLoggedIn){
+      //navigate to product page
+      this.router.navigate(['/product'])
+    }
+  }
+
+  checkLoginR(){
+    //if isLoggedIn = false
+    if(!this.isLoggedIn){
+      //navigate to login page
+      this.router.navigate(['/login']);
+    }
+    //if isLoggedIn = true
+    else if(this.isLoggedIn){
+      //navigate to review product page
+      this.router.navigate(['/reviewProduct'])
+    }
+  }
 }

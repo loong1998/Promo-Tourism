@@ -11,14 +11,17 @@ import { ProductService } from "../services/products.service";
 )
 
 export class ProductComponent implements OnInit{
-    products: Product[] = [];
+  //declare an empty array to hold Product object
+  products: Product[] = [];
 
-    constructor(public productsService: ProductService){
-        
-    }
+  //initailize product service variable
+  constructor(public productsService: ProductService){
+      
+  }
 
-    ngOnInit(): void {
-      this.products = this.productsService.getProductsArray();
-    }
+  ngOnInit(): void {
+    //get all product object and store in products array
+    this.products = this.productsService.getProductsArray();
+  }
 
 }
