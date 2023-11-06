@@ -7,7 +7,7 @@
         <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'"><a mat-button (click)="checkLoginP()">Product</a></li>
 
         <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'">
-          <a mat-button (click)="checkLoginP()">Review Product</a>
+          <a mat-button (click)="checkLoginR()">Review Product</a>
         </li>
         
         <li *ngIf="isLoggedIn && userRole === 'officer'">

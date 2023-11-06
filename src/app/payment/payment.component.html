@@ -49,7 +49,7 @@
               <mat-form-field class="mb-0">
                 <mat-label>CVV</mat-label>
                 <input matInput required type="string" name="cvvInput"
-                  ngModel #cvvInput="ngModel">
+                  ngModel #cvvInput="ngModel" pattern="[0-9]{3}">
                 <mat-error *ngIf="cvvInput.invalid">Please enter a valid CVV! (e.g. 111)</mat-error>
               </mat-form-field>
 
