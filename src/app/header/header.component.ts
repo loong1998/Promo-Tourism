@@ -18,6 +18,28 @@ export class HeaderComponent {
     return this.authService.getUserRole();
   }
 
+  isLogin(){
+    console.log(this.authService.getLoginUser());
+    if(this.authService.getLoginUser() === null){
+      console.log("false");
+      return false;
+    }
+    else{
+      console.log("true");
+      return true;
+    }
+  }
+
+  getUserRole(){
+    if(this.authService.getLoginUser !== null){
+      console.log(this.authService.getLoginUser().role);
+      return this.authService.getLoginUser().role;
+    }
+    else{
+      return '';
+    }
+  }
+
   logout() {
     // Perform logout actions, e.g., clearing session, token, etc.
     this.authService.logout();

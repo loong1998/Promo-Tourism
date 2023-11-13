@@ -41,4 +41,31 @@ export class AuthService {
   getUserRole(): string | null {
     return this.loggedInUser;
   }
+
+  user: any = null;
+
+    checkLogin(username: string, password: string){
+        const user = this.users.find(
+            (x) => x.username === username && x.password === password
+        );
+
+        if(user != null){
+            return this.user = user;
+        }
+        else{
+            return null;
+        }
+    }
+
+    getLoginUser(){
+        return this.user;
+    }
+
+    getLoginState(){
+        if(this.user === null){
+            return false;
+        }
+
+        return true;
+    }
 }

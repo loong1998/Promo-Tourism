@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -47,6 +48,22 @@ export class LoginComponent {
       }
     } else {
       // Authentication failed, handle it (e.g., display an error message)
+    }
+  }
+
+  user: any;
+
+  loginUser(form: NgForm){
+    if(form.invalid){
+      return;
+    }
+
+    this.user = this.authService.checkLogin(form.value.username, form.value.password);
+
+    console.log(this.user.role);
+
+    if(this.user.role === 'user' || this.user.role === 'merchant' || this.user.role === 'officer'){
+      this.router.navigate(['/home']);
     }
   }
 

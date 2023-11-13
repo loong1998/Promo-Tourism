@@ -4,24 +4,30 @@
     <div name="headerRight" id="headerRight">
       <ul>
         <li><a routerLink="/home" mat-button>Home</a></li>
-        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'"><a mat-button (click)="checkLoginP()">Product</a></li>
 
-        <li *ngIf="userRole !== 'merchant' && userRole !== 'officer'">
-          <a mat-button (click)="checkLoginR()">Review Product</a>
-        </li>
-        
-        <li *ngIf="isLoggedIn && userRole === 'officer'">
-          <a routerLink="/account-list" mat-button>Account Management</a>
-        </li>
-        <li *ngIf="isLoggedIn && userRole === 'officer'"><a routerLink="/analyticsReport" mat-button>Report</a></li>
+          <li *ngIf="!isLogin() || (isLogin() && getUserRole() === 'user')">
+            <a mat-button>Product</a>
+          </li>
 
-        <li *ngIf="isLoggedIn && userRole === 'merchant'">
-          <a routerLink="/manage-tourism-product" mat-button>Product Management</a>
-        </li>
-        <li *ngIf="isLoggedIn && userRole === 'merchant'"><a routerLink="/analyticsReport" mat-button>Report</a></li>
-        <li *ngIf="!isLoggedIn">
-          <a routerLink="/login" mat-button>Login</a>
-        </li>
+          <li *ngIf="!isLogin() || (isLogin() && getUserRole() === 'user')">
+            <a mat-button>Review Product</a>
+          </li>
+          
+          <li *ngIf="isLogin() && getUserRole() === 'officer'">
+            <a mat-button>Account Management</a>
+          </li>
+
+          <li *ngIf="isLogin() && getUserRole() === 'merchant'">
+            <a routerLink="/manage-tourism-product" mat-button>Product Management</a>
+          </li>
+          
+          <li *ngIf="isLogin() && (getUserRole() === 'officer' || getUserRole() === 'merchant')">
+            <a routerLink="/analyticsReport" mat-button>Report</a>
+          </li>
+
+          <li>
+            <a routerLink="/login" mat-button>Login</a>
+          </li>
         <li *ngIf="isLoggedIn" mat-button>
           <button mat-button (click)="logout()">Logout</button>
         </li>
