@@ -6,11 +6,11 @@
         <li><a routerLink="/home" mat-button>Home</a></li>
 
           <li *ngIf="!isLogin() || (isLogin() && getUserRole() === 'user')">
-            <a mat-button>Product</a>
+            <a mat-button routerLink="/product" (click)="checkLogin()">Product</a>
           </li>
 
           <li *ngIf="!isLogin() || (isLogin() && getUserRole() === 'user')">
-            <a mat-button>Review Product</a>
+            <a mat-button routerLink="/reviewProduct" (click)="checkLogin()">Review Product</a>
           </li>
           
           <li *ngIf="isLogin() && getUserRole() === 'officer'">
