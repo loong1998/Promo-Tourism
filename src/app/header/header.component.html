@@ -25,12 +25,13 @@
             <a routerLink="/analyticsReport" mat-button>Report</a>
           </li>
 
-          <li>
+          <li *ngIf="!isLogin()">
             <a routerLink="/login" mat-button>Login</a>
           </li>
-        <li *ngIf="isLoggedIn" mat-button>
-          <button mat-button (click)="logout()">Logout</button>
-        </li>
+
+          <li *ngIf="isLogin()" mat-button>
+            <button mat-button (click)="logout()">Logout</button>
+          </li>
       </ul>
     </div>
   </mat-toolbar>
