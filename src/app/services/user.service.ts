@@ -110,5 +110,31 @@ export class UserService {
     }
   }
 
+  getMerchantAccounts(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/merchant-accounts`).pipe(
+      catchError((error) => {
+        console.error('Error fetching merchant accounts:', error);
+        return throwError(error);
+      })
+    );
+  }
+  
+  approveMerchant(id: string): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/approve-merchant/${id}`, {}).pipe(
+      catchError((error) => {
+        console.error('Error approving merchant:', error);
+        return throwError(error);
+      })
+    );
+  }
+  
+  rejectMerchant(id: string): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/reject-merchant/${id}`, {}).pipe(
+      catchError((error) => {
+        console.error('Error rejecting merchant:', error);
+        return throwError(error);
+      })
+    );
+  }
   
 }

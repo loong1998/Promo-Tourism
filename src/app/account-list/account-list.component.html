@@ -20,7 +20,7 @@
             <p><strong>Contact Number:</strong> {{ user.contactNumber }}</p>
             <p><strong>Email:</strong> {{ user.email }}</p>
             <p><strong>Company Description:</strong> {{ user.companyDescription }}</p>
-            <a class="download-link" [href]="'assets/sample.pdf'" download="{{ user.username }}.pdf">Download PDF</a>
+            <a class="download-link" [href]="user.pdfFile" download="{{ user.username }}.pdf">Download PDF</a>
             <div class="button-group" *ngIf="!areButtonsHidden(user)">
               <br>
               <button class="approve-button" (click)="approveUser(user)">Approve</button>

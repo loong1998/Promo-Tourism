@@ -21,9 +21,9 @@ export class AccountListComponent implements OnInit {
     ) {}
 
   ngOnInit() {
-    // Subscribe to the accounts observable to get updates
-    this.userService.getAccounts().subscribe((accounts) => {
-      this.accounts = accounts.filter(user => user.userType === 'merchant');
+    // Fetch merchant accounts with 'pending' status from the server
+    this.userService.getMerchantAccounts().subscribe((merchantAccounts) => {
+      this.accounts = merchantAccounts;
     });
   }
 
@@ -36,22 +36,36 @@ export class AccountListComponent implements OnInit {
     user.expanded = !user.expanded;
   }
   
-  approveUser(user: any) {
-    user.status = 'Approved'; // Set the status to 'approve'
-    this.dialog.open(SaveSuccessfulDialogComponent, {
-      disableClose: true,
-      width: 'auto',
-      height: '230px',
-    });
+  approveUser(user: User) {
+    this.userService.approveMerchant(user._id).subscribe(
+      (updatedMerchant) => {
+        user.status = 'Approved';
+        this.dialog.open(SaveSuccessfulDialogComponent, {
+          disableClose: true,
+          width: 'auto',
+          height: '230px',
+        });
+      },
+      (error) => {
+        console.error('Error approving merchant:', error);
+      }
+    );
   }
 
-  rejectUser(user: any) {
-    user.status = 'Rejected'; // Set the status to 'reject'
-    this.dialog.open(RejectDialogComponent, {
-      disableClose: true,
-      width: 'auto',
-      height: '180px',
-    });
+  rejectUser(user: User) {
+    this.userService.rejectMerchant(user._id).subscribe(
+      (updatedMerchant) => {
+        user.status = 'Rejected';
+        this.dialog.open(RejectDialogComponent, {
+          disableClose: true,
+          width: 'auto',
+          height: '180px',
+        });
+      },
+      (error) => {
+        console.error('Error rejecting merchant:', error);
+      }
+    );
   }
 
   areButtonsHidden(user: User): boolean {

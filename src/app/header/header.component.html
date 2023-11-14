@@ -13,9 +13,10 @@
             <a mat-button routerLink="/reviewProduct" (click)="checkLogin()">Review Product</a>
           </li>
           
-          <li *ngIf="isLogin() && getUserRole() === 'officer'">
+          <!-- <li *ngIf="isLogin() && getUserRole() === 'officer'">
             <a mat-button>Account Management</a>
-          </li>
+          </li> -->
+          <li><a routerLink="/account-list" mat-button>Review Merchant Registration</a></li>
 
           <li *ngIf="isLogin() && getUserRole() === 'merchant'">
             <a routerLink="/manage-tourism-product" mat-button>Product Management</a>

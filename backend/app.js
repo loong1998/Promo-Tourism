@@ -92,4 +92,37 @@ app.get('/api/get-next-merchant-id', async (req, res) => {
   }
 });
 
+app.get('/api/merchant-accounts', async (req, res) => {
+  try {
+    const merchantAccounts = await User.find({ userType: 'merchant', status: 'pending' });
+    res.status(200).json(merchantAccounts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching merchant accounts from the database');
+  }
+});
+
+app.post('/api/approve-merchant/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedMerchant = await User.findByIdAndUpdate(id, { status: 'Approved' }, { new: true });
+    res.status(200).json(updatedMerchant);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error approving merchant account');
+  }
+});
+
+// Add a POST endpoint to handle rejecting a merchant account
+app.post('/api/reject-merchant/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedMerchant = await User.findByIdAndUpdate(id, { status: 'Rejected' }, { new: true });
+    res.status(200).json(updatedMerchant);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error rejecting merchant account');
+  }
+});
+
 module.exports = app;
