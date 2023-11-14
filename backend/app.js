@@ -40,6 +40,8 @@ app.post('/api/register', async (req, res) => {
 
     const newUser = new User(userData);
 
+    newUser.status = 'registered';
+
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
@@ -62,6 +64,8 @@ app.post('/api/register-merchant', upload.single('pdfFile'), async (req, res) =>
     }
 
     const newMerchant = new User(merchantData);
+
+    newMerchant.status = 'pending';
 
     // Access the uploaded file using req.file
     if (req.file) {
