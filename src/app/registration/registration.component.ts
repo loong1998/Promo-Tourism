@@ -1,13 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { RegistrationSuccessDialogComponent } from './registration-success-dialog/registration-success-dialog.component';
 import { MerchantSuccessDialogComponent } from './merchant-success-dialog/merchant-success-dialog.component';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UserService} from '../services/user.service';
+import { UserService } from '../services/user.service';
 import { User } from '../services/user.model';
-
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
 
 @Component({
   selector: 'app-registration',
@@ -18,16 +18,18 @@ export class RegistrationComponent implements OnInit {
   registrationForm!: FormGroup;
   selectedPdfFile: File | undefined;
   nextMerchantID: string;
+  errorMessage: string | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private dialog: MatDialog,
-    private userService: UserService // Inject the UserService
+    private userService: UserService, // Inject the UserService
+    private snackBar: MatSnackBar // Inject MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.nextMerchantID = '005';
+    this.nextMerchantID = this.generateNextMerchantID();
     this.registrationForm = this.formBuilder.group({
       username: ['', Validators.required],
       contactNumber: ['', [Validators.required, this.validateMalaysiaPhoneNumber]],
@@ -82,7 +84,6 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-
   // Custom validator function to check if passwords match
   private passwordMatchValidator(group: FormGroup): { passwordsNotMatch: boolean } | null {
     const password = group.get('password')?.value;
@@ -129,14 +130,14 @@ export class RegistrationComponent implements OnInit {
         this.registrationForm.get(controlName)?.markAsTouched();
       }
     }
-  
+
     // Check if the form is valid
     if (this.registrationForm.valid) {
       const formData = this.registrationForm.value;
-  
+
       // Get the selected userType
       const userType = formData.userType;
-  
+
       // Initialize a base user object
       const newUser: User = {
         username: formData.username,
@@ -147,7 +148,7 @@ export class RegistrationComponent implements OnInit {
         expanded: false,
         userType: userType, // Set userType here
       };
-  
+
       // Additional properties for merchant users
       if (userType === 'merchant') {
         // Check if a PDF file is selected
@@ -156,50 +157,74 @@ export class RegistrationComponent implements OnInit {
           this.registrationForm.get('pdfFile')?.setErrors({ required: true });
           return; // Stop registration process if PDF is not selected
         }
-  
+
         // PDF file is selected, you can proceed with registration
         // Implement registration logic here
-  
+
         // Assign merchant-specific properties
         newUser.merchantName = formData.merchantName;
         newUser.companyDescription = formData.companyDescription;
         newUser.pdfFile = formData.pdfFile;
-  
+
         // Generate merchantID only for merchant users
-        const nextMerchantID = this.generateNextMerchantID();
-        newUser.merchantID = nextMerchantID;
-      }
-  
-      // Add the user to the service
-      this.userService.addAccount(newUser);
-  
-      // Show the appropriate success dialog based on userType
-      if (userType === 'merchant') {
-        // Show the file upload dialog
-        this.dialog.open(MerchantSuccessDialogComponent, {
-          disableClose: true,
-          width: 'auto',
-          height: '230px',
-        });
+        newUser.merchantID = this.generateNextMerchantID();
+
+        // Call the registerMerchant method in the UserService
+        this.userService.registerMerchant(newUser).subscribe(
+          response => {
+            // Handle successful registration
+            // Show the file upload dialog
+            this.dialog.open(MerchantSuccessDialogComponent, {
+              disableClose: true,
+              width: 'auto',
+              height: '230px',
+            });
+            console.log('User registered successfully:', response);
+          },
+          // error => {
+          //   // Handle registration error
+          //   console.error(error);
+          // }
+          (error) => {
+            // Handle registration error
+          
+            console.error('Registration error:', error);
+            this.errorMessage = error;
+    
+            // Show an error message using MatSnackBar
+            // this.snackBar.open('Registration failed. Please try again.', 'Close', {
+            //   duration: 5000, // Duration in milliseconds
+            // });
+          }
+        );
       } else {
-        // Show the success dialog for regular user registration
-        this.dialog.open(RegistrationSuccessDialogComponent, {
-          disableClose: true,
-          width: 'auto',
-          height: '180px',
-        });
+        // Call the registerUser method in the UserService
+        this.userService.registerUser(newUser).subscribe(
+          response => {
+            // Handle successful registration
+            // Show the success dialog for regular user registration
+            this.dialog.open(RegistrationSuccessDialogComponent, {
+              disableClose: true,
+              width: 'auto',
+              height: '180px',
+            });
+          },
+          error => {
+            // Handle registration error
+            console.error(error);
+          }
+        );
       }
     }
   }
-  
+
   private generateNextMerchantID(): string {
     const lastMerchantID = this.userService.getLastMerchantID();
-    const nextIDNumber = parseInt(lastMerchantID) + 1;
+    const nextIDNumber = isNaN(parseInt(lastMerchantID)) ? 1 : parseInt(lastMerchantID) + 1;
     return nextIDNumber.toString().padStart(3, '0');
   }
   
-      
-
+  
   onLogin() {
     this.router.navigate(['/login']);
   }

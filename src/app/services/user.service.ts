@@ -1,68 +1,26 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../services/user.model';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { User } from './user.model';
+import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private accounts: User[] = [
-    { 
-      merchantID :'001',
-      username: 'user1',
-      merchantName: 'Merchant 1',
-      contactNumber: '+60123456789',
-      email: 'user1@example.com',
-      companyDescription: 'Company description 1',
-      password: 'Password1@',
-      pdfFile: 'assets/sample.pdf',
-      status: 'pending',
-      expanded: false,
-      userType: 'merchant',
-    },
-    { 
-      merchantID :'002',
-      username: 'user2',
-      merchantName: 'Merchant 2',
-      contactNumber: '+60123456789',
-      email: 'user2@example.com',
-      companyDescription: 'Company description 2',
-      password: 'Password2@',
-      pdfFile: 'assets/sample.pdf',
-      status: 'pending',
-      expanded: false,
-      userType: 'merchant',
-    },
-    { 
-      merchantID :'003',
-      username: 'user3',
-      merchantName: 'Merchant 3',
-      contactNumber: '+60123456789',
-      email: 'user3@example.com',
-      companyDescription: 'Company description 3',
-      password: 'Password3@',
-      pdfFile: 'assets/sample.pdf',
-      status: 'Approved',
-      expanded: false,
-      userType: 'merchant',
-    },
-    { 
-      merchantID :'004',
-      username: 'user4',
-      merchantName: 'Merchant 4',
-      contactNumber: '+60123456789',
-      email: 'user4@example.com',
-      companyDescription: 'Company description 4',
-      password: 'Password4@',
-      pdfFile: 'assets/sample.pdf',
-      status: 'Rejected',
-      expanded: false,
-      userType: 'merchant',
-    },
-  ];
+  private accounts: User[] = [];
   private accountsSubject: BehaviorSubject<User[]> = new BehaviorSubject<User[]>(this.accounts);
-  private merchantIDCounter: number = 4;
-  constructor() {}
+  private apiUrl = 'http://localhost:3000/api'; // Update this to your actual API endpoint
+  private merchantIDCounter: number | undefined;
+
+  constructor(private http: HttpClient, private snackBar: MatSnackBar) {
+    // Initialize the merchantIDCounter from the server on service instantiation
+    this.fetchNextMerchantID().subscribe(
+      (nextMerchantID) => (this.merchantIDCounter = parseInt(nextMerchantID)),
+      (error) => console.error('Error fetching next merchant ID:', error)
+    );
+  }
 
   getAccounts(): Observable<User[]> {
     return this.accountsSubject.asObservable();
@@ -82,4 +40,75 @@ export class UserService {
   getLastMerchantID(): string {
     return `00${this.merchantIDCounter}`.slice(-3);
   }
+  
+
+  registerUser(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/register`, user).pipe(
+      catchError(error => {
+        console.error('Error in register:', error);
+
+        // Show an error message using MatSnackBar
+        this.snackBar.open('Email or username already in use', 'Close', {
+          duration: 5000, // Duration in milliseconds
+        });
+
+        return throwError(error); // Rethrow the error
+      })
+    );
+  }
+
+  registerMerchant(merchant: User): Observable<User> {
+    if (this.merchantIDCounter === undefined) {
+      console.error('Merchant ID counter not initialized.');
+      return throwError('Merchant ID counter not initialized.');
+    }
+
+    // Update the merchantID before registering the merchant
+    merchant.merchantID = this.merchantIDCounter.toString().padStart(3, '0');
+    this.updateMerchantIDCounter();
+
+    // Update the URL according to your server's API
+    return this.http.post<User>(`${this.apiUrl}/register-merchant`, merchant).pipe(
+      catchError((error) => {
+        console.error('Error in registerMerchant:', error);
+
+        // Show an error message using MatSnackBar
+        this.snackBar.open('Email or username already in use', 'Close', {
+          duration: 5000, // Duration in milliseconds
+        });
+
+        return throwError(error); // Rethrow the error
+      })
+    );
+  }
+
+  getNextMerchantID(): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/get-next-merchant-id`).pipe(
+      catchError((error) => {
+        console.error('Error in getNextMerchantID:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  private fetchNextMerchantID(): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/get-next-merchant-id`).pipe(
+      catchError((error) => {
+        console.error('Error in fetchNextMerchantID:', error);
+        return throwError(error);
+      })
+    );
+  }
+
+  private updateMerchantIDCounter(): void {
+    if (this.merchantIDCounter !== undefined) {
+      this.merchantIDCounter++;
+      this.fetchNextMerchantID().subscribe(
+        (nextMerchantID) => (this.merchantIDCounter = parseInt(nextMerchantID)),
+        (error) => console.error('Error updating merchant ID counter:', error)
+      );
+    }
+  }
+
+  
 }

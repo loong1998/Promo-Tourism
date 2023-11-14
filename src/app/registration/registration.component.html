@@ -1,6 +1,6 @@
 <div class="registration-container">
     <h1>Registration Form</h1>
-    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
         <div class="form-group">
             <label for="userType" class="wide-align">Register as:</label>
             <select id="userType" formControlName="userType">
@@ -58,10 +58,10 @@
         
         <div *ngIf="registrationForm.get('userType').value === 'merchant'" class="form-group">        
             <label for="pdfFile" class="wide-align">Upload PDF File (e.g. approved licenses, testimonials)</label>
-            <input type="file" id="pdfFile" (change)="onPdfFileChange($event)" accept=".pdf" required>
+            <input type="file" id="pdfFile" (change)="onPdfFileChange($event)" accept=".pdf" formControlName="pdfFile" required>
             <div *ngIf="hasError('pdfFile', 'required')" class="error-message">PDF File is required for Merchants</div>
         </div><br>
-          
+        
 
         <div class="form-group">
             <button type="submit">Register</button>
