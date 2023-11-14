@@ -5,6 +5,7 @@ import { Booking } from "../services/booking.model";
 import { BookingService } from "../services/booking.service";
 import { ReviewProductService } from "../services/reviewProduct.service";
 import { PaidProduct } from "../services/reviewProduct.model";
+import { ProductService } from "../services/products.service";
 import { Router } from '@angular/router';
 import { MatDialog } from "@angular/material/dialog";
 import { PaymentModalComponent } from "./paymentModal/payment-modal.component";
@@ -21,17 +22,27 @@ export class PaymentComponent implements OnInit{
     public booking: Booking[] = [];
     public paidProducts: PaidProduct[] = [];
 
+    lastBooking: any;
+    product: any;
     tourName: string;
 
     constructor(public activatedRouted: ActivatedRoute,
-        public BookingService: BookingService,
+        public bookingService: BookingService,
         public ReviewProductService: ReviewProductService,
+        public productService: ProductService,
         public router: Router, public matDialog: MatDialog){
 
     }
 
     ngOnInit(): void{
-        this.booking.push(this.BookingService.getLastPurchaseProduct());
+        this.lastBooking = this.bookingService.getLastPurchaseProduct();
+
+        this.product = this.productService.getProductsArray()
+            .find(p => p.productID === this.lastBooking.productID)
+        console.log(this.product);
+        this.tourName = this.product.tourTitle;
+        console.log(this.tourName);
+        // this.booking.push(this.bookingService.getLastPurchaseProduct());
     }
 
     openModal(){

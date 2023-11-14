@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ProductService } from "../../services/products.service";
 import { Booking } from "src/app/services/booking.model";
 import { BookingService } from "src/app/services/booking.service";
 import { NgForm } from "@angular/forms";
-import { Router } from '@angular/router';
+import { AuthService } from "src/app/services/auth.service";
 
 @Component(
     {
@@ -24,15 +24,18 @@ export class ProductDetailsComponent implements OnInit{
 
     pax: number = 0;
     totalPrice: number = 0;
+    username: any;
 
     constructor(public activatedRouted: ActivatedRoute,
         public productsService: ProductService,
         public bookingService: BookingService,
+        public authService: AuthService,
         public router: Router){
 
     }
 
     ngOnInit(): void{
+        this.username = this.getUsername();
         //get the selected product's productID and store in selectedProductID
         this.selectedProductID = this.activatedRouted.snapshot.paramMap.get('productID');
 
@@ -50,17 +53,21 @@ export class ProductDetailsComponent implements OnInit{
             return;
         }
 
-        this.bookingService.addPurchaseProduct(this.products.productID, this.products.tourTitle,
-            this.products.imageUrl, form.value.numOfPax,
-            form.value.contactNum, form.value.visitDate, this.totalPrice);
+        this.bookingService.addBooking(this.products.productID, form.value.numOfPax,
+            form.value.contactNum, form.value.visitDate, this.totalPrice,
+            this.username);
             
-        this.router.navigate(['/productDetails/{{products.productID}}/payment'])
+        // this.router.navigate(['/productDetails/{{products.productID}}/payment'])
         form.resetForm();
     }
 
     //calculate the total price of the tour based on the tour price and number of person
     calculateTotalPrice(){
         return this.totalPrice = this.products.price * this.pax;
+    }
+
+    getUsername(){
+        return this.authService.getLoginUser().username;
     }
 
     splitDesc(){

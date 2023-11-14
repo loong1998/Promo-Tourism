@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import { Booking } from './booking.model';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable(
     {
@@ -11,17 +12,25 @@ export class BookingService{
     public bookings: Booking[] = [];
     public totalPrice: number;
 
-    //private bookingDetails: new BehaviorSubject<PurchaseProduct[]> = new BehaviorSubject<PurchaseProduct[]>([])
+    constructor(private http: HttpClient){}
 
     getPurchaseProduct(){
         return this.bookings;
     }
 
-    addPurchaseProduct(productID:string, tourName:string, imageUrl: string, numOfPax:number, contactNum:string, visitDate:Date, totalPrice:number){
-        const booking: Booking = {productID:productID, tourName:tourName, imageUrl:imageUrl, numOfPax:numOfPax, contactNum:contactNum,
-            visitDate:visitDate, totalPrice:totalPrice};
+    addBooking(productID: string, numOfPax: number, contactNum: string,
+        visitDate: Date, totalPrice: number, username: string){
+        const newBooking: Booking = {bookingID: '', productID: productID,
+            numOfPax: numOfPax, contactNum: contactNum, visitDate: visitDate,
+            totalPrice: totalPrice, username: username};
             
-        this.bookings.push(booking);
+            this.http.post<{message: string, bookingID: string}>('http://localhost:3000/api/booking', newBooking)
+            .subscribe((response) => {
+                console.log(response.message);
+                const bookingID = response.bookingID;
+                newBooking.bookingID = bookingID;
+                this.bookings.push(newBooking);
+            })
     }
 
     getLastPurchaseProduct(){

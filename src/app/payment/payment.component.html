@@ -6,7 +6,7 @@
             <table class="table">
                 <tr>
                   <td>Tour Name</td>
-                  <td>{{bookingDetail.tourName}}</td>
+                  <td>{{tourName}}</td>
                 </tr>
                 <tr>
                   <td>Number of Pax</td>
@@ -55,7 +55,7 @@
 
                 <br><br>
             
-                <p hidden ngModel [(ngModel)]="tourName" name="tourName">{{bookingDetail.tourName}}</p>
+                <!-- <p hidden ngModel [(ngModel)]="tourName" name="tourName">{{bookingDetail.tourName}}</p> -->
 
                 <mat-dialog-actions>
                   <button class="btn" mat-button color="primary" type="submit"

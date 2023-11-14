@@ -19,20 +19,16 @@ export class HeaderComponent {
   }
 
   isLogin(){
-    console.log(this.authService.getLoginUser());
     if(this.authService.getLoginUser() === null){
-      console.log("false");
       return false;
     }
     else{
-      console.log("true");
       return true;
     }
   }
 
   getUserRole(){
     if(this.authService.getLoginUser !== null){
-      console.log(this.authService.getLoginUser().role);
       return this.authService.getLoginUser().role;
     }
     else{
