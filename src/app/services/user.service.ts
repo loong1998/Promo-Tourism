@@ -136,5 +136,13 @@ export class UserService {
       })
     );
   }
+  loginUser(credentials: { username: string; password: string }): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
+      catchError((error) => {
+        console.error('Error in loginUser:', error);
+        return throwError(error);
+      })
+    );
+  }
   
 }

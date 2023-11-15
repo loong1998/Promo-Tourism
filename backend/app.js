@@ -181,5 +181,23 @@ app.post("/api/payment", (req, res, next) => {
         });
     });
 })
+app.post('/api/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
 
+    // Find the user in the database based on the username
+    const user = await User.findOne({ username });
+
+    // Check if the user exists and the password is correct
+    if (user && user.password === password) {
+      // You can customize the response based on your needs
+      res.status(200).json({ message: 'Login successful', user });
+    } else {
+      res.status(401).json({ message: 'Invalid credentials' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error during login');
+  }
+});
 module.exports = app;

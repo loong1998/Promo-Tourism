@@ -1,52 +1,28 @@
-import { Component } from "@angular/core";
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: "app-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ['./header.component.css']
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent {
-  constructor(private router: Router, private authService: AuthService) {}
+export class HeaderComponent implements OnInit {
+  isLoggedIn$: Observable<boolean>;
+  userType$: Observable<string>;
+  isLoggedIn: boolean;  // New property to store the non-observable value
+  userType: string;
 
-  get isLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
-  get userRole(): string | null {
-    return this.authService.getUserRole();
-  }
-
-  isLogin(){
-    if(this.authService.getLoginUser() === null){
-      return false;
-    }
-    else{
-      return true;
-    }
-  }
-
-  getUserRole(){
-    if(this.authService.getLoginUser !== null){
-      return this.authService.getLoginUser().role;
-    }
-    else{
-      return '';
-    }
-  }
-
-  checkLogin(){
-    if(this.authService.getLoginUser() === null){
-      this.router.navigate(['/login']);
-    }
+  ngOnInit() {
+    this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.userType$ = this.authService.getUserType();
   }
 
   logout() {
-    // Perform logout actions, e.g., clearing session, token, etc.
+    // Handle logout logic
     this.authService.logout();
-
-    // Redirect to the login page after logout
-    this.router.navigate(['/login']);
   }
 }

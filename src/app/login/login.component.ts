@@ -1,74 +1,65 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+// login.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
-  username: string = '';
-  password: string = '';
-  rememberMe: boolean = false;
-  submitted: boolean = false;
-  loginError: boolean = false;
+export class LoginComponent implements OnInit {
+  loginForm: FormGroup;
 
-  constructor(private router: Router, private authService: AuthService) {} // Inject the Router and AuthService
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    // this.loginForm = this.formBuilder.group({
+    //   username: ['', Validators.required],
+    //   password: ['', Validators.required],
+    // });
+  }
+
+  ngOnInit() {
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
 
   onSubmit() {
-    this.submitted = true;
+    const { username, password } = this.loginForm.value;
+    this.authService.login(username, password).subscribe(
+      (response) => {
+        // Log the entire response to the console
+        console.log('Login response:', response);
 
-    // Check if either username or password is blank
-    if (!this.username || !this.password) {
-      return; // Do not proceed with form submission
-    }
-    if (!this.authService.login(this.username, this.password)) {
-      this.loginError = true; // Set the error flag to true
-      return; // Do not proceed with login
-    }
-    // Perform authentication using the AuthService
-    const isAuthenticated = this.authService.login(
-      this.username,
-      this.password
-    );
+        // Assuming your API returns user information after successful login
+        const user = response.user;
 
-    if (isAuthenticated) {
-      // Authentication successful, redirect to the appropriate page
-      if (this.authService.getLoggedInUser() === 'merchant') {
-        // Merchant is logged in, redirect to the merchant dashboard or other appropriate page
-        this.router.navigate(['/home']);
-      } else if (this.authService.getLoggedInUser() === 'officer') {
-        // Officer is logged in, redirect to the officer dashboard or other appropriate page
-        this.router.navigate(['/home']);
-      } else {
-        // Regular user is logged in, redirect to the user dashboard or other appropriate page
-        this.router.navigate(['/home']);
+        // Check if the 'userType' property is present in the response
+        if (user && user.userType) {
+          this.authService.setUserType(user.userType);
+          console.log('Login successful:', user);
+
+          // Navigate based on user type
+          if (user.userType === 'officer') {
+            this.router.navigate(['/home']);
+          } else if (user.userType === 'merchant') {
+            this.router.navigate(['/home']);
+          } else if (user.userType === 'user') {
+            this.router.navigate(['/home']);
+          } else {
+            console.error('Unknown user type:', user.userType);
+          }
+        } else {
+          console.error('User type not present in the response:', response);
+        }
+      },
+      (error) => {
+        // Handle login error
+        console.error('Login failed', error);
       }
-    } else {
-      // Authentication failed, handle it (e.g., display an error message)
-    }
-  }
-
-  user: any;
-
-  loginUser(form: NgForm){
-    if(form.invalid){
-      return;
-    }
-
-    this.user = this.authService.checkLogin(form.value.username, form.value.password);
-
-    console.log(this.user.role);
-
-    if(this.user.role === 'user' || this.user.role === 'merchant' || this.user.role === 'officer'){
-      this.router.navigate(['/home']);
-    }
-  }
-
-  onRegister() {
-    // Implement your registration logic here
-    this.router.navigate(['/registration']);
+    );
   }
 }

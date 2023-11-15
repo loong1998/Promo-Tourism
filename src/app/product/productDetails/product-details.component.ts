@@ -4,7 +4,6 @@ import { ProductService } from "../../services/products.service";
 import { Booking } from "src/app/services/booking.model";
 import { BookingService } from "src/app/services/booking.service";
 import { NgForm } from "@angular/forms";
-import { AuthService } from "src/app/services/auth.service";
 
 @Component(
     {
@@ -30,13 +29,11 @@ export class ProductDetailsComponent implements OnInit{
     constructor(public activatedRouted: ActivatedRoute,
         public productsService: ProductService,
         public bookingService: BookingService,
-        public authService: AuthService,
         public router: Router){
 
     }
 
     ngOnInit(): void{
-        this.username = this.getUsername();
         //get the selected product's productID and store in selectedProductID
         this.selectedProductID = this.activatedRouted.snapshot.paramMap.get('productID');
 
@@ -64,10 +61,6 @@ export class ProductDetailsComponent implements OnInit{
     //calculate the total price of the tour based on the tour price and number of person
     calculateTotalPrice(){
         return this.totalPrice = this.products.price * this.pax;
-    }
-
-    getUsername(){
-        return this.authService.getLoginUser().username;
     }
 
     splitDesc(){

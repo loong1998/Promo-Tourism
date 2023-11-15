@@ -45,6 +45,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ChartModule } from 'angular-highcharts';
 import {NgxPrintModule} from 'ngx-print';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthService } from './services/auth.service';
+import { AuthGuard } from './auth.guard'; // Import the AuthGuard
 
 
 
@@ -53,16 +55,16 @@ const appRoutes: Routes = [
   {path: "home", component: CarouselComponent},
   {path: "login", component: LoginComponent },
   {path: "registration", component: RegistrationComponent},
-  {path: "account-list", component:AccountListComponent},
+  {path: 'account-list', component: AccountListComponent, canActivate: [AuthGuard]},
   {path: "", component: CarouselComponent},
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
-  {path: 'manage-tourism-product', component: ManageTourismProductComponent},
+  {path: 'manage-tourism-product', component: ManageTourismProductComponent, canActivate: [AuthGuard]},
   { path: 'edit-product/:id', component: EditProductComponent },
   { path: 'add-product', component: AddProductComponent },
   {path: "productDetails/:productID/payment", component: PaymentComponent},
-  {path: "reviewProduct", component: ReviewProductComponent},
+  {path: "reviewProduct", component: ReviewProductComponent, canActivate: [AuthGuard]},
   {path: "submitReview/:productID", component: SubmitReviewComponent},
-  {path: "analyticsReport", component: AnalyticsReportComponent},
+  {path: "analyticsReport", component: AnalyticsReportComponent, canActivate: [AuthGuard]},
   {path: "paymentModal", component: PaymentModalComponent},
   {path: "submitReviewModal", component: SubmitReviewModalComponent}
 ];
@@ -116,7 +118,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
     
   ],
-  providers: [ProductService],
+  providers: [ProductService,AuthService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
