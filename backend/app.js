@@ -42,7 +42,7 @@ app.post('/api/register', async (req, res) => {
 
     const newUser = new User(userData);
 
-    newUser.status = 'registered';
+    newUser.status = 'Approved';
 
     const user = await newUser.save();
     res.status(200).json(user);
@@ -194,6 +194,7 @@ app.post('/api/login', async (req, res) => {
       res.status(200).json({ message: 'Login successful', user });
     } else {
       res.status(401).json({ message: 'Invalid credentials' });
+      
     }
   } catch (err) {
     console.error(err);

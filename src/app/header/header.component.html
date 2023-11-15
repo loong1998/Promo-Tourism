@@ -32,6 +32,11 @@
         <!-- Show login link if not logged in -->
         <li><a routerLink="/login" mat-button>Login</a></li>
       </div>
+
+      <div *ngIf="!(isLoggedIn$ | async)">
+        <!-- Show login link if not logged in -->
+        <li><a routerLink="/registration" mat-button>Register</a></li>
+      </div>
     </ul>
   </div>
 </mat-toolbar>

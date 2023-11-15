@@ -20,35 +20,41 @@ export class AuthService {
   );
   private userTypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   userType$: Observable<string> = this.userTypeSubject.asObservable();
-
+    
+  private userStatusSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  userStatus$: Observable<string> = this.userStatusSubject.asObservable();;
+  
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string): Observable<any> {
     const loginData = { username, password };
   
     return this.http.post<any>(`${this.apiUrl}/login`, loginData)
-      .pipe(
-        map(response => {
-          const userType = response.userType;
-  
-          // Set the user type in the service
-          this.setUserType(userType); // Make sure this sets the userType property
-  
-          // Set the user as logged in
+    .pipe(
+      map(response => {
+        const user = response.user;
+
+        if (user && user.userType && user.status === 'Approved') {
+          this.setUserType(user.userType);
+          this.setUserStatus(user.status);
           this.setLoggedIn();
-  
-          // Log the userType to verify it's set correctly
-          console.log('UserType from login:', this.getUserType());
-  
           return response;
-        })
-      );
+        } else {
+          throw new Error('User is not approved or status is missing.');
+          
+        }
+      })
+    );
   }
 
   setUserType(userType: string) {
     this.userTypeSubject.next(userType);
   }
   
+  setUserStatus(status: string) {
+    this.userStatusSubject.next(status);
+  }
+
   getUserType(): Observable<string> {
     // Logic to retrieve user type and return as an Observable
     return this.userType$;
