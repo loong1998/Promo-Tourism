@@ -125,4 +125,26 @@ app.post('/api/reject-merchant/:id', async (req, res) => {
   }
 });
 
+//add new booking
+app.post("/api/booking", (req, res, next) => {
+    const booking = new Booking(
+        {
+            productID: req.body.productID,
+            numOfPax: req.body.numOfPax,
+            contactNum: req.body.contactNum,
+            visitDate: req.body.visitDate,
+            totalPrice: req.body.totalPrice,
+            username: req.body.username
+        }
+    );
+
+    booking.save().then(addBooking => {
+        console.log(booking);
+        res.status(200).json({
+            message: 'Booking added successfully',
+            bookingID: addBooking._id
+        });
+    });
+})
+
 module.exports = app;

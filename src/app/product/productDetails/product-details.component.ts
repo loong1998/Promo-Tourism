@@ -57,7 +57,7 @@ export class ProductDetailsComponent implements OnInit{
             form.value.contactNum, form.value.visitDate, this.totalPrice,
             this.username);
             
-        // this.router.navigate(['/productDetails/{{products.productID}}/payment'])
+        this.router.navigate(['/productDetails/{{products.productID}}/payment'])
         form.resetForm();
     }
 
