@@ -38,6 +38,6 @@ export class AnalyticsReportComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.bookings = this.bookingService.getPurchaseProduct();
+    this.bookings = this.bookingService.getAllBooking();
   }
 }

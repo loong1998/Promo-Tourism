@@ -25,6 +25,7 @@ export class ProductDetailsComponent implements OnInit{
     pax: number = 0;
     totalPrice: number = 0;
     username: any;
+    
 
     constructor(public activatedRouted: ActivatedRoute,
         public productsService: ProductService,
@@ -42,7 +43,6 @@ export class ProductDetailsComponent implements OnInit{
         //find the selected productID that match with the existing productID and store the product object
         //in products variable
         this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
-
         //get the product's description and store in productdesc variable
         this.splitDesc();
     }
@@ -53,7 +53,7 @@ export class ProductDetailsComponent implements OnInit{
             return;
         }
 
-        this.bookingService.addBooking(this.products.productID, form.value.numOfPax,
+        this.bookingService.addBooking(this.products.productID, this.products.tourTitle, form.value.numOfPax,
             form.value.contactNum, form.value.visitDate, this.totalPrice,
             this.username);
             

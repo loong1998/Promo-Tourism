@@ -1,29 +1,29 @@
 <body>
     <div class="model">
-      <div class="payment" *ngFor="let bookingDetail of booking">
+      <div class="payment" *ngFor="let booking of lastBooking">
         <div class="receipt-box"  id="print-section">
           <h3>Reciept Summary</h3>
             <table class="table">
                 <tr>
                   <td>Tour Name</td>
-                  <td>{{tourName}}</td>
+                  <td>{{booking.tourTitle}}</td>
                 </tr>
                 <tr>
                   <td>Number of Pax</td>
-                  <td>{{bookingDetail.numOfPax}}</td>
+                  <td>{{booking.numOfPax}}</td>
                 </tr>
                 <tr>
                   <td>Contact Number</td>
-                  <td>{{bookingDetail.contactNum}}</td>
+                  <td>{{booking.contactNum}}</td>
                 </tr>
                 <tr>
                   <td>Booking Date</td>
-                  <td>{{bookingDetail.visitDate | date:'dd-MM-yyyy'}}</td>
+                  <td>{{booking.visitDate | date:'dd-MM-yyyy'}}</td>
                 </tr>
                 <tfoot>
                   <tr>
                       <td>Sum</td>
-                      <td>RM {{bookingDetail.totalPrice}}</td>
+                      <td>RM {{booking.totalPrice}}</td>
                   </tr>
                 </tfoot>
             </table>
@@ -54,8 +54,6 @@
               </mat-form-field>
 
                 <br><br>
-            
-                <!-- <p hidden ngModel [(ngModel)]="tourName" name="tourName">{{bookingDetail.tourName}}</p> -->
 
                 <mat-dialog-actions>
                   <button class="btn" mat-button color="primary" type="submit"

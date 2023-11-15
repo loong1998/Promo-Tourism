@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const multer = require('multer'); // Add multer middleware for file uploads
 const User = require('./models/user');
+const Booking = require('./models/booking');
+const Payment = require('./models/payment');
 
 const app = express();
 
@@ -130,6 +132,7 @@ app.post("/api/booking", (req, res, next) => {
     const booking = new Booking(
         {
             productID: req.body.productID,
+            tourTitle: req.body.tourTitle,
             numOfPax: req.body.numOfPax,
             contactNum: req.body.contactNum,
             visitDate: req.body.visitDate,
@@ -143,6 +146,38 @@ app.post("/api/booking", (req, res, next) => {
         res.status(200).json({
             message: 'Booking added successfully',
             bookingID: addBooking._id
+        });
+    });
+})
+
+//get all the booking
+app.get("/api/getLastBooking", (req, res, next) => {
+    Booking.find().then(document => {
+        res.status(200).json({
+            message: 'Booking fetched successfully',
+            bookings: document
+        });
+    })
+});
+
+//add payment
+app.post("/api/payment", (req, res, next) => {
+    const payment = new Payment({
+        creditCardNum: req.body.creditCardNum,
+        expDate: req.body.expDate,
+        cvv: req.body.cvv,
+        bookingID: req.body.bookingID,
+        productID: req.body.productID,
+        tourTitle: req.body.tourTitle,
+        totalPrice: req.body.totalPrice,
+        username: req.body.username,
+    });
+
+    payment.save().then(addPayment => {
+        console.log(payment);
+        res.status(200).json({
+            message: "Payment is made",
+            paymentID: addPayment._id
         });
     });
 })

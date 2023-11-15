@@ -1,10 +1,11 @@
-export interface Booking{
+export interface Payment{
+    paymentID: string,
+    creditCardNum: string;
+    expDate: string;
+    cvv: string;
     bookingID: string;
     productID: string;
     tourTitle: string;
-    numOfPax: number;
-    contactNum: string;
-    visitDate: Date;
     totalPrice: number;
     username: string;
 }

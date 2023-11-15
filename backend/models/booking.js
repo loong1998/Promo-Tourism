@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const bookingSchema = mongoose.Schema({
     productID: {type: String, require: true},
+    tourTitle: {type: String, require: true},
     numOfPax: {type: Number, require: true},
     contactNum: {type: String, require: true},
     visitDate: {type: Date, require: true},

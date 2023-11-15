@@ -1,14 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute,Router } from "@angular/router";
 import { NgForm } from "@angular/forms";
 import { Booking } from "../services/booking.model";
 import { BookingService } from "../services/booking.service";
 import { ReviewProductService } from "../services/reviewProduct.service";
 import { PaidProduct } from "../services/reviewProduct.model";
 import { ProductService } from "../services/products.service";
-import { Router } from '@angular/router';
 import { MatDialog } from "@angular/material/dialog";
 import { PaymentModalComponent } from "./paymentModal/payment-modal.component";
+import { PaymentService } from "../services/payment.service";
+import { Subscription } from "rxjs";
 
 @Component(
     {
@@ -19,30 +20,34 @@ import { PaymentModalComponent } from "./paymentModal/payment-modal.component";
 )
 
 export class PaymentComponent implements OnInit{
-    public booking: Booking[] = [];
+    product
+    public bookings: Booking[] = [];
     public paidProducts: PaidProduct[] = [];
+    public bookingSub: Subscription | undefined;
 
-    lastBooking: any;
-    product: any;
+    lastBooking: Booking[] = [];
     tourName: string;
 
     constructor(public activatedRouted: ActivatedRoute,
         public bookingService: BookingService,
         public ReviewProductService: ReviewProductService,
         public productService: ProductService,
+        public paymentService: PaymentService,
         public router: Router, public matDialog: MatDialog){
 
     }
 
     ngOnInit(): void{
-        this.lastBooking = this.bookingService.getLastPurchaseProduct();
+        this.bookingService.getBookings();
+        this.bookingSub = this.bookingService.getBookingUpdateListener()
+            .subscribe(
+                (bookings: Booking[]) => {
+                    this.bookings = bookings;
+                }
+            );
 
-        this.product = this.productService.getProductsArray()
-            .find(p => p.productID === this.lastBooking.productID)
-        console.log(this.product);
-        this.tourName = this.product.tourTitle;
-        console.log(this.tourName);
-        // this.booking.push(this.bookingService.getLastPurchaseProduct());
+        this.lastBooking.push(this.bookingService.getLastBooking());
+        console.log(this.lastBooking);
     }
 
     openModal(){
@@ -56,6 +61,11 @@ export class PaymentComponent implements OnInit{
             return;
         }
 
+        this.paymentService.addPayment(form.value.creditCardNumInput,
+            form.value.expDateInput, form.value.cvvInput,
+            this.lastBooking[0].bookingID, this.lastBooking[0].productID,
+            this.lastBooking[0].tourTitle, this.lastBooking[0].totalPrice,
+            this.lastBooking[0].username);
         this.router.navigate(['/home'])
     }
 }
