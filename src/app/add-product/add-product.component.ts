@@ -4,7 +4,7 @@ import { ProductService } from "../services/products.service";
 import { Router, ActivatedRoute } from '@angular/router';
 import { Product } from '../services/products.model'; // Import the Product model
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-add-product',
   templateUrl: './add-product.component.html',
@@ -21,7 +21,8 @@ export class AddProductComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.productForm = this.formBuilder.group({
       tourTitle: ['', Validators.required], // Tour title is required
@@ -57,7 +58,7 @@ export class AddProductComponent implements OnInit {
       };
       reader.readAsDataURL(file);
     });
-  }  
+  }
 
   ngOnInit() {}
 
@@ -66,28 +67,37 @@ export class AddProductComponent implements OnInit {
     if (this.productForm.valid) {
       // Replace 'your-logic-to-generate-unique-id' with your actual logic
       const newProductId = this.generateProductId();
-  
+      const loggedInUsername = this.authService.getUsername();
       const newProduct: Product = {
         productID: newProductId,
         tourTitle: this.productForm.value.tourTitle,
         imageUrl: this.productForm.value.imageUrl,
         descriptions: this.productForm.value.descriptions.split('\n'),
         rating: 0, // Set a default rating (you can change it as needed)
-        price: 50
+        price: 50,
+        username: loggedInUsername || '',
       };
-  
-      this.productService.addProduct(newProduct);
-      this.snackBar.open('Product updated successfully!', 'Close', {
-        duration: 2000,
-      });
-      this.router.navigate(['/manage-tourism-product']);
+      
+      this.productService.addProduct(newProduct).subscribe(
+        (response) => {
+          console.log('Product added:', response);
+          this.snackBar.open('Product updated successfully!', 'Close', {
+            duration: 2000,
+          });
+          this.router.navigate(['/manage-tourism-product']);
+        },
+        (error) => {
+          console.error('Error adding product:', error);
+          // Handle error
+        }
+      );
     }
   }
-  
+
   generateProductId(): string {
     // Retrieve the products from the ProductService as an array
     const products = this.productService.getProductsArray();
-  
+
     if (products && products.length > 0) {
       const productIds = products.map((product) => parseInt(product.productID, 10));
       const maxProductId = Math.max(...productIds);
@@ -97,16 +107,15 @@ export class AddProductComponent implements OnInit {
       return '001';
     }
   }
+
   // Create a method to check if a field should display an error message
-displayError(fieldName: string): boolean {
-  const control = this.productForm.get(fieldName);
-  return this.formSubmitted && control && control.invalid && control.touched;
-}
+  displayError(fieldName: string): boolean {
+    const control = this.productForm.get(fieldName);
+    return this.formSubmitted && control && control.invalid && control.touched;
+  }
 
   onCancel() {
     // Navigate back to the previous page
     this.router.navigate(['/manage-tourism-product'], { relativeTo: this.route });
   }
-  
-  
 }

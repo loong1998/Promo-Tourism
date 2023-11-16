@@ -5,6 +5,7 @@ const multer = require('multer'); // Add multer middleware for file uploads
 const User = require('./models/user');
 const Booking = require('./models/booking');
 const Payment = require('./models/payment');
+const Product = require('./models/product');
 
 const app = express();
 
@@ -15,7 +16,8 @@ mongoose.connect("mongodb+srv://yewloong981105:webtech123@cluster0.033uyuf.mongo
   console.log("Connection failed", err);
 });
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' })); // Adjust the limit as needed
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true })); // Adjust the limit as needed
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -201,4 +203,36 @@ app.post('/api/login', async (req, res) => {
     res.status(500).send('Error during login');
   }
 });
+app.post('/api/add-product', async (req, res, next) => {
+  try {
+    const { tourTitle, imageUrl, descriptions, rating, price, username } = req.body;
+
+    // Create a new Product instance with username included
+    const newProduct = new Product({
+      tourTitle,
+      imageUrl,
+      descriptions,
+      rating,
+      price,
+      username  // Include the username field in the Product creation
+    });
+
+    // Save the new product to the database
+    const savedProduct = await newProduct.save();
+
+    res.status(201).json({
+      message: 'Product added successfully',
+      product: savedProduct
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      message: 'Error adding product',
+      error: error.message
+    });
+  }
+});
+;
+
+
 module.exports = app;
