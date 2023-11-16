@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 
 import { Booking } from "../services/booking.model";
 import { BookingService } from "../services/booking.service";
+import { ReviewProduct } from "../services/reviewProduct.model";
+import { Subscription } from "rxjs";
+import { AuthService } from "../services/auth.service";
 
 @Component(
     {
@@ -12,13 +15,25 @@ import { BookingService } from "../services/booking.service";
 )
 
 export class ReviewProductComponent implements OnInit{
-    bookings: Booking[] = [];
+    bookingsForReview: Booking[] = [];
+    public bookingSub: Subscription | undefined;
+    reviewProducts: ReviewProduct[] = [];
 
-    constructor(public bookingService: BookingService){
+    loginUser;
+
+    constructor(public bookingService: BookingService, public authService: AuthService){
         
     }
 
     ngOnInit(): void{
-        this.bookings = this.bookingService.getAllBooking();
+        this.loginUser = this.authService.getUsername();
+
+        this.bookingService.getBookingForReview(this.loginUser.username);
+        this.bookingSub = this.bookingService.getBookingForUpdateListener()
+            .subscribe(
+                (bookingsForReview: Booking[]) => {
+                    this.bookingsForReview = bookingsForReview;
+                }
+            );
     }
 }

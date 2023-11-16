@@ -13,6 +13,8 @@ import { AuthService } from './auth.service'; // Import the AuthService
 export class BookingService{
     public bookings: Booking[] = [];
     public bookingUpdated = new Subject<Booking[]>();
+    public bookingsForReview: Booking[] = [];
+    public bookingForReviewUpdated = new Subject<Booking[]>();
     public totalPrice: number;
 
     constructor(private http: HttpClient, private authService: AuthService ){}// Inject the AuthService
@@ -71,5 +73,34 @@ export class BookingService{
     
     getBookingUpdateListener(){
         return this.bookingUpdated.asObservable();
+    }
+
+    getBookingForReview(username: string){
+        this.http.get<{message: string, bookings: any}>('http://localhost:3000/api/getBookingForReview/' + username)
+            .pipe(map(
+                (bookingData) => {
+                    return bookingData.bookings
+                    .map(booking =>{
+                        return {
+                            productID: booking.productID,
+                            productName: booking.productName,
+                            numOfPax: booking.numOfPax,
+                            contactNum: booking.contactNum,
+                            visitDate: booking.visitDate,
+                            totalPrice: booking.totalPrice,
+                            username: booking.username,
+                            bookingID: booking._id
+                        };
+                    });
+                }
+            ))
+            .subscribe(filteredBooking => {
+                this.bookingsForReview= filteredBooking;
+                this.bookingForReviewUpdated.next([...this.bookingsForReview]);
+            })
+    }
+
+    getBookingForUpdateListener(){
+        return this.bookingForReviewUpdated.asObservable();
     }
 }

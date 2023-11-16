@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { BookingService } from "src/app/services/booking.service";
 import { ReviewProductService } from "src/app/services/reviewProduct.service";
+import { ProductService } from "src/app/services/products.service";
 import { NgForm } from "@angular/forms";
 import { Router } from '@angular/router';
 import { MatDialog } from "@angular/material/dialog";
@@ -16,18 +17,20 @@ import { SubmitReviewModalComponent } from "./submit-review-modal/submit-review-
 )
 
 export class SubmitReviewComponent implements OnInit{
-    bookingProduct;
+    product;
     selectedBookingProductID;
 
     constructor(public activatedRouted: ActivatedRoute,
-        public bookingService: BookingService, public reviewProductService: ReviewProductService,
+        public bookingService: BookingService,
+        public reviewProductService: ReviewProductService,
+        public productService: ProductService,
         public router: Router, public matDialog: MatDialog){
 
     }
 
     ngOnInit(): void {
         this.selectedBookingProductID = this.activatedRouted.snapshot.paramMap.get('productID');
-        this.bookingProduct = this.bookingService.bookings.find(x => x.productID == this.selectedBookingProductID);
+        this.product = this.productService.getProductsArray().find(x => x.productID === this.selectedBookingProductID);
     }
 
     onSubmitReview(form: NgForm){
@@ -35,7 +38,7 @@ export class SubmitReviewComponent implements OnInit{
             return;
          }
 
-         this.reviewProductService.addReviewProduct(this.bookingProduct.productID, form.value.reviewInput);
+         this.reviewProductService.addReviewProduct(this.product.productID, form.value.reviewInput);
          form.reset();
          this.router.navigate(['/home'])
 

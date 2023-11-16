@@ -162,6 +162,18 @@ app.get("/api/getLastBooking", (req, res, next) => {
     })
 });
 
+//get booking for review
+app.get("/api/getBookingForReview/:username", (req, res, next) => {
+    const reqUsername = req.params.username;
+
+    Booking.find({username:reqUsername}).then(document => {
+        res.status(200).json({
+            message: 'Booking fetched successfully',
+            bookings: document
+        });
+    })
+});
+
 //add payment
 app.post("/api/payment", (req, res, next) => {
     const payment = new Payment({
@@ -183,6 +195,25 @@ app.post("/api/payment", (req, res, next) => {
         });
     });
 })
+
+//add review
+app.post("/api/review", (req, res, next) => {
+    const review = new Review(
+        {
+            productID: req.body.productID,
+            review: req.body.review,
+        }
+    );
+
+    review.save().then(addReview => {
+        console.log(review);
+        res.status(200).json({
+            message: 'Review added successfully',
+            reviewID: addReview._id
+        });
+    });
+})
+
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;

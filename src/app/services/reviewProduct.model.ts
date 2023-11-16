@@ -3,7 +3,7 @@ export interface PaidProduct{
 }
 
 export interface ReviewProduct{
+    reviewID: string;
     productID: string
-    // name: string;
     review: string;
 }
