@@ -6,6 +6,7 @@ const User = require('./models/user');
 const Booking = require('./models/booking');
 const Payment = require('./models/payment');
 const Product = require('./models/product');
+const Review = require('./models/review');
 
 const app = express();
 
@@ -198,21 +199,22 @@ app.post("/api/payment", (req, res, next) => {
 
 //add review
 app.post("/api/review", (req, res, next) => {
-    const review = new Review(
-        {
-            productID: req.body.productID,
-            review: req.body.review,
-        }
-    );
+  const review = new Review({
+      productID: req.body.productID,
+      review: req.body.review,
+  });
 
-    review.save().then(addReview => {
-        console.log(review);
-        res.status(200).json({
-            message: 'Review added successfully',
-            reviewID: addReview._id
-        });
-    });
-})
+  review.save().then(addReview => {
+      console.log(review);
+      res.status(200).json({
+          message: 'Review added successfully',
+          reviewID: addReview._id
+      });
+  }).catch(err => {
+      console.error(err);
+      res.status(500).send('Error adding review');
+  });
+});
 
 app.post('/api/login', async (req, res) => {
   try {

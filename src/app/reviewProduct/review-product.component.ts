@@ -14,26 +14,23 @@ import { AuthService } from "../services/auth.service";
     }
 )
 
-export class ReviewProductComponent implements OnInit{
+export class ReviewProductComponent implements OnInit {
     bookingsForReview: Booking[] = [];
-    public bookingSub: Subscription | undefined;
+    loginUser: string | undefined; // Define loginUser as a string
     reviewProducts: ReviewProduct[] = [];
+    
+    constructor(public bookingService: BookingService, public authService: AuthService) {}
 
-    loginUser;
-
-    constructor(public bookingService: BookingService, public authService: AuthService){
-        
-    }
-
-    ngOnInit(): void{
+    ngOnInit(): void {
         this.loginUser = this.authService.getUsername();
 
-        this.bookingService.getBookingForReview(this.loginUser.username);
-        this.bookingSub = this.bookingService.getBookingForUpdateListener()
-            .subscribe(
+        if (this.loginUser) {
+            this.bookingService.getBookingForReview(this.loginUser);
+            this.bookingService.getBookingForUpdateListener().subscribe(
                 (bookingsForReview: Booking[]) => {
                     this.bookingsForReview = bookingsForReview;
                 }
             );
+        }
     }
 }
