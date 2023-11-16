@@ -60,7 +60,7 @@ const appRoutes: Routes = [
   {path: 'productDetails/:productID', component: ProductDetailsComponent},
   {path: 'manage-tourism-product', component: ManageTourismProductComponent, canActivate: [AuthGuard]},
   { path: 'edit-product/:id', component: EditProductComponent },
-  { path: 'add-product', component: AddProductComponent },
+  { path: 'add-product', component: AddProductComponent, canActivate: [AuthGuard]},
   {path: "productDetails/:productID/payment", component: PaymentComponent},
   {path: "reviewProduct", component: ReviewProductComponent, canActivate: [AuthGuard]},
   {path: "submitReview/:productID", component: SubmitReviewComponent},

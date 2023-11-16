@@ -28,6 +28,7 @@ export class AddProductComponent implements OnInit {
       tourTitle: ['', Validators.required], // Tour title is required
       imageUrl: ['', Validators.required], // Image URL is required
       descriptions: ['', Validators.required], // Descriptions is required
+      price: ['', [Validators.required, Validators.pattern('^[50-5000]*$')]],// price is required
     });
   }
 
@@ -62,7 +63,7 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
+  onSubmit() {  
     this.formSubmitted = true;
     if (this.productForm.valid) {
       // Replace 'your-logic-to-generate-unique-id' with your actual logic
@@ -74,7 +75,7 @@ export class AddProductComponent implements OnInit {
         imageUrl: this.productForm.value.imageUrl,
         descriptions: this.productForm.value.descriptions.split('\n'),
         rating: 0, // Set a default rating (you can change it as needed)
-        price: 50,
+        price: this.productForm.value.price,
         username: loggedInUsername || '',
       };
       

@@ -2,16 +2,16 @@
     <h1>Add New Product</h1>
     <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <div class="error-message" *ngIf="formSubmitted && productForm.get('tourTitle').hasError('required')">**Please enter your tour title**</div>
-        <div class="input-row">
+        <div>
             <label for="tourTitle">Tour Title:</label>
+            <div class="error-message" *ngIf="formSubmitted && productForm.get('tourTitle').hasError('required')">**Please enter your tour title**</div>
             <input type="text" id="tourTitle" formControlName="tourTitle" placeholder="Enter your tour title">
         </div>
       </div>
       <div class="form-group">
-        <div class="error-message" *ngIf="formSubmitted && productForm.get('imageUrl').hasError('required')">**Please upload your product image**</div>
-        <div class="input-row">
+        <div>
           <label for="imageUrl">Image URL:</label>
+          <div class="error-message" *ngIf="formSubmitted && productForm.get('imageUrl').hasError('required')">**Please upload your product image**</div>
           <input type="file" id="imageUrl" (change)="onImageSelected($event)" accept="image/*">
         </div>
       </div> <br>
@@ -29,6 +29,14 @@
           class="bullet-list"
           placeholder="Enter your descriptions here..."
         ></textarea>
+      </div>
+      <div class="form-group">
+        <div>
+            <label for="price">Price:</label>
+            <div class="error-message" *ngIf="formSubmitted && productForm.get('price').hasError('required')">Please enter a price</div>
+            <input type="text" id="price" formControlName="price" placeholder="Enter Integer e.g: 50">
+            <div class="error-message" *ngIf="productForm.get('price').hasError('pattern')">Please enter a valid price (numbers only) e.g: 50 Minimum 50 Maximum 5000</div>
+        </div>
       </div>
       <div class="form-group">
         <div class="button-group">

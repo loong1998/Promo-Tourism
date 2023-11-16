@@ -17,7 +17,7 @@
   /* Style the table header */
   .product-header {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 3fr 1fr 1fr 1fr;
     border: 1px solid #ddd;
     background-color:rgb(222, 222, 222);
     color: #000000;
@@ -30,7 +30,7 @@
   /* Style the table rows */
   .product-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 2fr 3fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 2fr 3fr 1fr 1fr 1fr;
     border: 1px solid #ddd;
     padding: 10px;
     gap: 10px;

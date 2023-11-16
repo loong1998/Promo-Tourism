@@ -9,6 +9,7 @@
         <div>Image</div>
         <div>Description</div>
         <div>Rating</div>
+        <div>Price</div>
         <div>Actions</div>
     </div>
     
@@ -23,9 +24,10 @@
             </ul>
           </div>
         <div>{{ product.rating }}</div>
+        <div>{{ product.price }}</div>
         <div class="button-container">
             <button (click)="editProduct(product)" class="action-button green-button">Edit</button>
-            <button (click)="deleteProduct(product)" class="action-button red-button">Delete</button>
+            <button (click)="onDelete(product.productID)" class="action-button red-button">Delete</button>
         </div>
     </div>
 

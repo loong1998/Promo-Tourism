@@ -240,14 +240,26 @@ app.post('/api/add-product', async (req, res, next) => {
   try {
     const { tourTitle, imageUrl, descriptions, rating, price, username } = req.body;
 
-    // Create a new Product instance with username included
+    // Find the maximum productID in the database
+    const maxProduct = await Product.findOne({}, {}, { sort: { 'productID': -1 } });
+
+    let newProductID = 1; // Default productID if no products exist yet
+
+    if (maxProduct && maxProduct.productID) {
+      // Extract the numeric part and increment it by 1
+      const maxIDNumeric = parseInt(maxProduct.productID.match(/\d+/)[0], 10);
+      newProductID = maxIDNumeric + 1;
+    }
+
+    // Create a new Product instance with the generated productID
     const newProduct = new Product({
+      productID: newProductID.toString().padStart(3, '0'), // Adjust the padding as needed
       tourTitle,
       imageUrl,
       descriptions,
       rating,
       price,
-      username  // Include the username field in the Product creation
+      username
     });
 
     // Save the new product to the database
@@ -265,7 +277,36 @@ app.post('/api/add-product', async (req, res, next) => {
     });
   }
 });
-;
+
+app.get('/api/products/:username', async (req, res) => {
+  const { username } = req.params;
+  try {
+      // Fetch products based on the username from your database
+      const products = await Product.find({ username });
+
+      res.status(200).json(products);
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching products');
+  }
+});
+
+app.delete('/api/products/:productID', (req, res) => {
+  const { productID } = req.params; // Extract productID from request parameters
+
+  Product.findOneAndDelete({ productID })
+    .then((result) => {
+      if (result) {
+        res.status(200).send({ message: 'Product deleted successfully' });
+      } else {
+        res.status(404).send({ error: 'Product not found' });
+      }
+    })
+    .catch((err) => {
+      console.error('Deletion failed:', err);
+      res.status(500).send({ error: 'Deletion failed' });
+    });
+});
 
 
 module.exports = app;
