@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import { Booking } from './booking.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Subject } from 'rxjs';
+import { AuthService } from './auth.service'; // Import the AuthService
 
 @Injectable(
     {
@@ -14,7 +15,7 @@ export class BookingService{
     public bookingUpdated = new Subject<Booking[]>();
     public totalPrice: number;
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private authService: AuthService ){}// Inject the AuthService
 
     getAllBooking(){
         return this.bookings;
@@ -22,9 +23,10 @@ export class BookingService{
 
     addBooking(productID: string, tourTitle: string, numOfPax: number, contactNum: string,
         visitDate: Date, totalPrice: number, username: string){
+        const loggedInUsername = this.authService.getUsername();
         const newBooking: Booking = {bookingID: '', productID: productID, tourTitle:tourTitle,
             numOfPax: numOfPax, contactNum: contactNum, visitDate: visitDate,
-            totalPrice: totalPrice, username: username};
+            totalPrice: totalPrice, username: loggedInUsername};
             
             this.http.post<{message: string, bookingID: string}>('http://localhost:3000/api/booking', newBooking)
             .subscribe((response) => {
@@ -32,6 +34,7 @@ export class BookingService{
                 const bookingID = response.bookingID;
                 newBooking.bookingID = bookingID;
                 this.bookings.push(newBooking);
+                this.bookingUpdated.next([...this.bookings]);
             })
 
             this.bookings.push(newBooking);

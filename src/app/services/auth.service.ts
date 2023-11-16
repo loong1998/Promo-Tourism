@@ -24,6 +24,8 @@ export class AuthService {
   private userStatusSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   userStatus$: Observable<string> = this.userStatusSubject.asObservable();;
   
+  private username: string = '';
+
   constructor(private http: HttpClient, private router: Router) {}
 
   login(username: string, password: string): Observable<any> {
@@ -67,7 +69,13 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.isLoggedInSubject.value;
   }
+  setUsername(username: string) {
+    this.username = username;
+  }
 
+  getUsername(): string {
+    return this.username;
+  }
   logout() {
     // Implement your logout logic, e.g., clearing user information and redirecting to login
     this.isLoggedInSubject.next(false);

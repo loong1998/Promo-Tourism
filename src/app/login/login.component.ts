@@ -42,6 +42,9 @@ export class LoginComponent implements OnInit {
           this.authService.setUserType(user.userType);
           console.log('Login successful:', user);
 
+           // Set the username in the AuthService
+          this.authService.setUsername(user.username);
+
           // Navigate based on user type
           if (user.userType === 'officer') {
             this.router.navigate(['/home']);
