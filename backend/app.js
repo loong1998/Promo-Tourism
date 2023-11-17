@@ -341,5 +341,12 @@ app.delete('/api/products/:productID', (req, res) => {
     });
 });
 
-
+//get all the booking
+app.get("/api/getAllProduct", (req, res, next) => {
+  Product.find().then(product => {
+      res.status(200).json({
+          products: product
+      });
+  })
+});
 module.exports = app;
