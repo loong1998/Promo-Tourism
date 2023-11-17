@@ -22,6 +22,7 @@ export class ProductComponent implements OnInit{
   ngOnInit(): void {
     //get all product object and store in products array
     // this.products = this.productsService.getProductsArray();
+    this.productsService.getAllProducts();
     this.productsService.getProductUpdateListener().subscribe(
       (products: Product[]) => {
           this.products = products;
