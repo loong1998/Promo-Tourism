@@ -29,7 +29,13 @@ export class ProductDetailsComponent implements OnInit{
 
     pax: number = 0;
     totalPrice: number = 0;
-    username: any;
+    username;
+    price;
+    priceSub: Subscription;
+    tourTitle;
+    tourTitleSub: Subscription;
+    merchantName;
+    merchantNameSub: Subscription;
     
 
     constructor(public activatedRouted: ActivatedRoute,
@@ -42,26 +48,31 @@ export class ProductDetailsComponent implements OnInit{
     ngOnInit(): void{
         //get the selected product's productID and store in selectedProductID
         this.selectedProductID = this.activatedRouted.snapshot.paramMap.get('productID');
+        this.products = this.productsService.products.find(p => p.productID === this.selectedProductID);
+
+        this.splitDesc();
         console.log(this.selectedProductID);
 
-        //find the selected productID that match with the existing productID and store the product object
-        //in products variable
-        // this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
-        // console.log(this.products.username);
-        //get the product's description and store in productdesc variable
-        // this.splitDesc();
-        // this.selectedProductIDSub = this.productsService.getProductID()
-        //     .subscribe((selectedProductID: string) => {
-        //         this.selectedProductID = selectedProductID;
-        //     })
-        // console.log(this.selectedProductID);
         this.productsService.getSelectedProduct(this.selectedProductID);
         this.productSub = this.productsService.getSelectedProductUpdateListener()
             .subscribe(
                 (product: Product[]) => {
                     this.product = product;
                 }
-            );
+            ); 
+
+        this.priceSub = this.productsService.getPrice().subscribe((price: number) => {
+            this.price = price;
+          });
+
+          this.tourTitleSub = this.productsService.getTourTitle().subscribe((tourTitle: string) => {
+            this.tourTitle = tourTitle;
+          });
+
+        console.log(this.price);
+        console.log(this.merchantName);
+
+          
     }
 
     onConfirmBookingDetails(form: NgForm){
@@ -70,9 +81,9 @@ export class ProductDetailsComponent implements OnInit{
             return;
         }
 
-        this.bookingService.addBooking(this.products.productID, this.products.tourTitle, form.value.numOfPax,
+        this.bookingService.addBooking(this.selectedProductID, this.products.tourTitle, form.value.numOfPax,
             form.value.contactNum, form.value.visitDate, this.totalPrice,
-            this.username, this.products.username);
+            this.username, this.products.merchantName);
             
         this.router.navigate(['/productDetails/{{products.productID}}/payment'])
         form.resetForm();

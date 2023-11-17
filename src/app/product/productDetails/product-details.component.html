@@ -12,12 +12,13 @@
                 <div class="row gy-2 gx-4 mb-4">
                     
                     <ul class="type">
-                        <li class="li-style" *ngFor="let desc of p.descriptions">{{desc}}</li>
+                        <li class="li-style" *ngFor="let desc of productDescs">{{desc}}</li>
                     </ul>
                 </div>
                 
                 
-                <p hidden>{{p.price}}</p>
+                <p >{{p.price}}</p>
+                <p>{{p.username}}</p>
             </div>
 
             <form class="row mb-4 padding" #bookingDetails="ngForm" (submit)="onConfirmBookingDetails(bookingDetails)">
