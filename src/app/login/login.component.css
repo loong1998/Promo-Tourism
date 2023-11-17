@@ -40,7 +40,7 @@ button.login-button {
     padding: 10px;
     border-radius: 3px;
     cursor: pointer;
-    width: 80%;
+    width: 50%;
 }
 
 button.login-button:hover {

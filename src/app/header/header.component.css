@@ -21,4 +21,5 @@ ul {
   
   li {
     float: left;
+    border-radius: 5px;
   }

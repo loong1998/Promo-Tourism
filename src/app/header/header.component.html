@@ -1,42 +1,21 @@
-<mat-toolbar>
-  <div name="headerName" id="headerName">Promo Tourism</div>
 
-  <div name="headerRight" id="headerRight">
+
+<mat-toolbar class="custom-toolbar">
+  <div id="headerName">Promo Tourism</div>
+  <div id="headerRight">
     <ul>
+      <div></div>
       <li><a routerLink="/home" mat-button>Home</a></li>
-      <li><a mat-button routerLink="/product">Product</a></li>
-
-      <div *ngIf="isLoggedIn$ | async">
-        <ng-container *ngIf="(userType$ | async) === 'officer'">
-          <!-- Officer links -->
-          <li><a routerLink="/account-list" mat-button>Review Merchant Registration</a></li>
-          <li><a routerLink="/analyticsReport" mat-button>Report</a></li>
-        </ng-container>
-      
-        <ng-container *ngIf="(userType$ | async) === 'merchant'">
-          <!-- Merchant links -->
-          <li><a routerLink="/manage-tourism-product" mat-button>Product Management</a></li>
-          <li><a routerLink="/analyticsReport" mat-button>Report</a></li>
-        </ng-container>
-      
-        <ng-container *ngIf="(userType$ | async) === 'user'">
-          <!-- User links -->
-          <li><a mat-button routerLink="/reviewProduct">Review Product</a></li>
-        </ng-container>
-      
-        <!-- Logout button -->
-        <li><a mat-button (click)="logout()">Logout</a></li>
-      </div>
-      
-      <div *ngIf="!(isLoggedIn$ | async)">
-        <!-- Show login link if not logged in -->
-        <li><a routerLink="/login" mat-button>Login</a></li>
-      </div>
-
-      <div *ngIf="!(isLoggedIn$ | async)">
-        <!-- Show login link if not logged in -->
-        <li><a routerLink="/registration" mat-button>Register</a></li>
-      </div>
+      <li *ngIf="(isLoggedIn$ &&userType$ | async) === 'user'"><a routerLink="/product" mat-button>Product</a></li>
+      <!-- Add other navigation links for different user types here -->
+      <li *ngIf="(isLoggedIn$ && userType$ | async) === 'officer'"><a routerLink="/account-list" mat-button>Review Merchant Registration</a></li>
+      <li *ngIf="(isLoggedIn$ && userType$ | async) === 'officer'"><a routerLink="/analyticsReport" mat-button>Report</a></li>
+      <li *ngIf="(isLoggedIn$ && userType$ | async) === 'merchant'" ><a routerLink="/manage-tourism-product" mat-button>Product Management</a></li>
+      <li *ngIf="(isLoggedIn$ && userType$ | async) === 'merchant'"><a routerLink="/analyticsReport" mat-button>Report</a></li>
+      <li *ngIf="(isLoggedIn$ &&userType$ | async) === 'user'"><a routerLink="/reviewProduct" mat-button>Review Product</a></li>
+      <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/login" mat-button>Login</a></li>
+      <li *ngIf="(isLoggedIn$ | async)"><a mat-button (click)="logout()">Logout</a></li>
+      <li *ngIf="!(isLoggedIn$ | async)"><a routerLink="/registration" mat-button>Register</a></li>
     </ul>
   </div>
 </mat-toolbar>
