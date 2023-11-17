@@ -68,11 +68,6 @@ export class ProductDetailsComponent implements OnInit{
           this.tourTitleSub = this.productsService.getTourTitle().subscribe((tourTitle: string) => {
             this.tourTitle = tourTitle;
           });
-
-        console.log(this.price);
-        console.log(this.merchantName);
-
-          
     }
 
     onConfirmBookingDetails(form: NgForm){
