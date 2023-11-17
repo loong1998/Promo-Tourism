@@ -55,7 +55,7 @@ export class ProductService{
                         return {
                             productID: product.productID,
                             tourTitle: product.tourTitle,
-                            imageUrl: product.numOfPax,
+                            imageUrl: product.imageUrl,
                             description: product.description,
                             rating: product.rating,
                             price: product.price,
