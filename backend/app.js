@@ -249,6 +249,17 @@ app.get("/api/officerReport/:username", (req, res, next) => {
     })
 });
 
+app.get("/api/productDetails/:productID", (req, res, next) => {
+    const reqProductID = req.params.productID;
+
+    Product.find({productID:reqProductID}).then(document => {
+        res.status(200).json({
+            message: 'Product details fetched successfully',
+            products: document
+        });
+    })
+});
+
 app.post('/api/login', async (req, res) => {
   try {
     const { username, password } = req.body;
