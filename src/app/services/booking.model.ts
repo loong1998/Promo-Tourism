@@ -7,4 +7,5 @@ export interface Booking{
     visitDate: Date;
     totalPrice: number;
     username: string;
+    merchantName: string;
 }

@@ -140,7 +140,8 @@ app.post("/api/booking", (req, res, next) => {
             contactNum: req.body.contactNum,
             visitDate: req.body.visitDate,
             totalPrice: req.body.totalPrice,
-            username: req.body.username
+            username: req.body.username,
+            merchantName: req.body.merchantName
         }
     );
 

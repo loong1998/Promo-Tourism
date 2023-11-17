@@ -7,7 +7,8 @@ const bookingSchema = mongoose.Schema({
     contactNum: {type: String, require: true},
     visitDate: {type: Date, require: true},
     totalPrice: {type: Number, require: true},
-    username: {type: String, require: true}
+    username: {type: String, require: true},
+    merchantName: {type: String, require: true}
 })
 
 module.exports = mongoose.model('Booking', bookingSchema, 'bookings');

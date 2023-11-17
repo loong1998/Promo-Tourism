@@ -40,6 +40,7 @@ export class ProductDetailsComponent implements OnInit{
         //find the selected productID that match with the existing productID and store the product object
         //in products variable
         this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
+        console.log(this.products.username);
         //get the product's description and store in productdesc variable
         this.splitDesc();
     }
@@ -52,7 +53,7 @@ export class ProductDetailsComponent implements OnInit{
 
         this.bookingService.addBooking(this.products.productID, this.products.tourTitle, form.value.numOfPax,
             form.value.contactNum, form.value.visitDate, this.totalPrice,
-            this.username);
+            this.username, this.products.username);
             
         this.router.navigate(['/productDetails/{{products.productID}}/payment'])
         form.resetForm();

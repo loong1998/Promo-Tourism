@@ -15,6 +15,8 @@ export class BookingService{
     public bookingUpdated = new Subject<Booking[]>();
     public bookingsForReview: Booking[] = [];
     public bookingForReviewUpdated = new Subject<Booking[]>();
+    public reports: Booking[] = [];
+    public reportUpdated = new Subject<Booking[]>();
     public totalPrice: number;
 
     constructor(private http: HttpClient, private authService: AuthService ){}// Inject the AuthService
@@ -24,11 +26,11 @@ export class BookingService{
     }
 
     addBooking(productID: string, tourTitle: string, numOfPax: number, contactNum: string,
-        visitDate: Date, totalPrice: number, username: string){
+        visitDate: Date, totalPrice: number, username: string, merchantName: string){
         const loggedInUsername = this.authService.getUsername();
         const newBooking: Booking = {bookingID: '', productID: productID, tourTitle:tourTitle,
             numOfPax: numOfPax, contactNum: contactNum, visitDate: visitDate,
-            totalPrice: totalPrice, username: loggedInUsername};
+            totalPrice: totalPrice, username: loggedInUsername, merchantName: merchantName};
             
             this.http.post<{message: string, bookingID: string}>('http://localhost:3000/api/booking', newBooking)
             .subscribe((response) => {
