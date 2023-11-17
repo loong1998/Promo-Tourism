@@ -1,23 +1,23 @@
-<div class="container-xxl py-5">
+<div class="container-xxl py-5" *ngFor="let p of product">
     <div class="container">
-        <div class="row g-5">
+        <div class="row g-5" >
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
                 <div class="position-relative h-100">
-                    <img class="img-fluid position-absolute w-100 h-100" src="{{products.imageUrl}}" alt="" style="object-fit: cover;">
+                    <img class="img-fluid position-absolute w-100 h-100" src="{{p.imageUrl}}" alt="" style="object-fit: cover;">
                 </div>
             </div>
             <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                <h1 class="mb-4">{{products.productName}}</h1>
+                <h1 class="mb-4">{{p.tourTitle}}</h1>
                 <p class="highlight-style">Highlight</p>
                 <div class="row gy-2 gx-4 mb-4">
-
+                    
                     <ul class="type">
-                        <li class="li-style" *ngFor="let desc of productDescs">{{desc}}</li>
+                        <li class="li-style" *ngFor="let desc of p.descriptions">{{desc}}</li>
                     </ul>
                 </div>
                 
                 
-                <p hidden>{{products.price}}</p>
+                <p hidden>{{p.price}}</p>
             </div>
 
             <form class="row mb-4 padding" #bookingDetails="ngForm" (submit)="onConfirmBookingDetails(bookingDetails)">

@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { Product } from "src/app/services/products.model";
 import { ProductService } from "../../services/products.service";
 import { Booking } from "src/app/services/booking.model";
 import { BookingService } from "src/app/services/booking.service";
 import { NgForm } from "@angular/forms";
+import { Subscription } from "rxjs";
 
 @Component(
     {
@@ -16,6 +18,10 @@ import { NgForm } from "@angular/forms";
 export class ProductDetailsComponent implements OnInit{
     products;
     selectedProductID;
+    selectedProductIDSub: Subscription;
+
+    product: Product[] = [];
+    public productSub: Subscription | undefined;
 
     productDescs = [];
 
@@ -36,13 +42,26 @@ export class ProductDetailsComponent implements OnInit{
     ngOnInit(): void{
         //get the selected product's productID and store in selectedProductID
         this.selectedProductID = this.activatedRouted.snapshot.paramMap.get('productID');
+        console.log(this.selectedProductID);
 
         //find the selected productID that match with the existing productID and store the product object
         //in products variable
-        this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
-        console.log(this.products.username);
+        // this.products = this.productsService.products.find(x => x.productID == this.selectedProductID);
+        // console.log(this.products.username);
         //get the product's description and store in productdesc variable
-        this.splitDesc();
+        // this.splitDesc();
+        // this.selectedProductIDSub = this.productsService.getProductID()
+        //     .subscribe((selectedProductID: string) => {
+        //         this.selectedProductID = selectedProductID;
+        //     })
+        // console.log(this.selectedProductID);
+        this.productsService.getSelectedProduct(this.selectedProductID);
+        this.productSub = this.productsService.getSelectedProductUpdateListener()
+            .subscribe(
+                (product: Product[]) => {
+                    this.product = product;
+                }
+            );
     }
 
     onConfirmBookingDetails(form: NgForm){
