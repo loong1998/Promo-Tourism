@@ -39,11 +39,13 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { NgApexchartsModule } from "ng-apexcharts";
+import { NgChartsModule } from 'ng2-charts';
+
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ChartModule } from 'angular-highcharts';
+// import { ChartModule } from 'angular-highcharts';
 import {NgxPrintModule} from 'ngx-print';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
@@ -113,10 +115,11 @@ const appRoutes: Routes = [
     MatExpansionModule,
     MatSnackBarModule,
     NoopAnimationsModule,
-    ChartModule,
+    // ChartModule,
     NgxPrintModule,
     HttpClientModule,
     NgApexchartsModule,
+    NgChartsModule,
     RouterModule.forRoot(appRoutes)
     
   ],

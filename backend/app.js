@@ -130,6 +130,16 @@ app.post('/api/reject-merchant/:id', async (req, res) => {
   }
 });
 
+//get all merchant accounts
+app.get("/api/getMerchantAccounts", (req, res, next) => {
+    User.find({userType: 'merchant'}).then(document => {
+        res.status(200).json({
+            message: "successfully gotten all users!",
+            users: document
+        })
+    })
+})
+
 //add new booking
 app.post("/api/booking", (req, res, next) => {
     const booking = new Booking(
@@ -215,6 +225,28 @@ app.post("/api/review", (req, res, next) => {
       console.error(err);
       res.status(500).send('Error adding review');
   });
+});
+
+//get report
+app.get("/api/report/:username", (req, res, next) => {
+    const reqMerchantName = req.params.username;
+
+    Booking.find({merchantName:reqMerchantName}).then(document => {
+        res.status(200).json({
+            message: 'Booking fetched successfully',
+            bookings: document
+        });
+    })
+});
+
+//get officer report
+app.get("/api/officerReport/:username", (req, res, next) => {
+    Booking.find().then(document => {
+        res.status(200).json({
+            message: 'Booking fetched successfully',
+            bookings: document
+        });
+    })
 });
 
 app.post('/api/login', async (req, res) => {

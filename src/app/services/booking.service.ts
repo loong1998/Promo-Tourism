@@ -62,6 +62,7 @@ export class BookingService{
                             visitDate: booking.visitDate,
                             totalPrice: booking.totalPrice,
                             username: booking.username,
+                            merchantName: booking.merchantName,
                             bookingID: booking._id
                         };
                     });
@@ -91,6 +92,7 @@ export class BookingService{
                             visitDate: booking.visitDate,
                             totalPrice: booking.totalPrice,
                             username: booking.username,
+                            merchantName: booking.merchantName,
                             bookingID: booking._id
                         };
                     });
@@ -104,5 +106,61 @@ export class BookingService{
 
     getBookingForUpdateListener(){
         return this.bookingForReviewUpdated.asObservable();
+    }
+
+    getBookingForReport(username: string){
+        this.http.get<{message: string, bookings: any}>('http://localhost:3000/api/report/' + username)
+            .pipe(map(
+                (bookingData) => {
+                    return bookingData.bookings
+                    .map(booking =>{
+                        return {
+                            productID: booking.productID,
+                            productName: booking.productName,
+                            numOfPax: booking.numOfPax,
+                            contactNum: booking.contactNum,
+                            visitDate: booking.visitDate,
+                            totalPrice: booking.totalPrice,
+                            username: booking.username,
+                            merchantName: booking.merchantName,
+                            bookingID: booking._id
+                        };
+                    });
+                }
+            ))
+            .subscribe(filteredBooking => {
+                this.reports= filteredBooking;
+                this.reportUpdated.next([...this.reports]);
+            })
+    }
+
+    getBookingForOfficerReport(){
+        this.http.get<{message: string, bookings: any}>('http://localhost:3000/api/report/')
+            .pipe(map(
+                (bookingData) => {
+                    return bookingData.bookings
+                    .map(booking =>{
+                        return {
+                            productID: booking.productID,
+                            productName: booking.productName,
+                            numOfPax: booking.numOfPax,
+                            contactNum: booking.contactNum,
+                            visitDate: booking.visitDate,
+                            totalPrice: booking.totalPrice,
+                            username: booking.username,
+                            merchantName: booking.merchantName,
+                            bookingID: booking._id
+                        };
+                    });
+                }
+            ))
+            .subscribe(filteredBooking => {
+                this.reports= filteredBooking;
+                this.reportUpdated.next([...this.reports]);
+            })
+    }
+
+    getBookingForReportListener(){
+        return this.reportUpdated.asObservable();
     }
 }

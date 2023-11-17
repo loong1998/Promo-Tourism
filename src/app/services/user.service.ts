@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, throwError, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { User } from './user.model';
 import { MatSnackBar } from '@angular/material/snack-bar'; // Import MatSnackBar
 
@@ -14,6 +14,9 @@ export class UserService {
   private apiUrl = 'http://localhost:3000/api'; // Update this to your actual API endpoint
   private merchantIDCounter: number | undefined;
 
+  private allAccounts: User[] = [];
+  private allAccountsUpdated = new Subject<User[]>();
+
   constructor(private http: HttpClient, private snackBar: MatSnackBar) {
     // Initialize the merchantIDCounter from the server on service instantiation
     this.fetchNextMerchantID().subscribe(
@@ -24,6 +27,34 @@ export class UserService {
 
   getAccounts(): Observable<User[]> {
     return this.accountsSubject.asObservable();
+  }
+
+  getAllAccounts(){
+    this.http.get<{message: string, users: any}>('http://localhost:3000/api/getMerchantAccounts')
+      .pipe(map(
+        (userData) => {
+          return userData.users.map(user => {
+            return {
+              username: user.username,
+              contactNumber: user.contactNumber,
+              email: user.email,
+              userType: user.userType,
+              password: user.password,
+              status: user.status,
+              expanded: user.expanded,
+              merchantID: user.merchantID
+            };
+          });
+        }
+      ))
+      .subscribe(transformedAccount => {
+        this.allAccounts = transformedAccount;
+        this.allAccountsUpdated.next([...this.allAccounts]);
+      })
+  }
+
+  getAllAccountsUpdateListener(){
+    return this.allAccountsUpdated.asObservable();
   }
 
   addAccount(account: User) {

@@ -1,8 +1,19 @@
-<div class="chart">
-    <div class="barLayout" [chart]="barChart"></div>
+<div class="chart" *ngIf="this.loginUserType === 'merchant'">
+    <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+    [title]="chartOptions.title"
+  ></apx-chart>
+</div>
 
-    <!-- <div class="totalSale">
-        <h3>Total Sales</h3>
-        <h1>RM 1000.00</h1>
-    </div> -->
+<div class="chart" *ngIf="this.loginUserType === 'officer'">
+    <apx-chart
+    [series]="chartOptions.series"
+    [chart]="chartOptions.chart"
+    [xaxis]="chartOptions.xaxis"
+    [yaxis]="chartOptions.yaxis"
+    [title]="chartOptions.title"
+  ></apx-chart>
 </div>
